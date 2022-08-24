@@ -19,6 +19,7 @@ public class OptionService {
 
 	public Option saveNewOption(JSONObject JSONoption, Stock stock) {
 		Option o = new Option();
+		
 		o.setContractSymbol(JSONoption.getString("contractSymbol"));
 		o.setContractSize(JSONoption.getString("contractSize"));
 		Timestamp exp = new Timestamp(JSONoption.getLong("expiration") * 1000);
@@ -36,7 +37,9 @@ public class OptionService {
 		//o.setVolume(JSONoption.getInt("volume"));    // "volume" often not found
 		o.setOpenInterest(JSONoption.getInt("openInterest"));
 		o.setImpliedVolatility(JSONoption.getDouble("impliedVolatility"));
+		
 		o.setStock(stock);
+		
 		return optRepo.save(o);
 	}
 	
