@@ -2,7 +2,6 @@ package com.volatilitysurf.controllers;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-//import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 
@@ -17,6 +16,7 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import com.volatilitysurf.models.Stock;
 import com.volatilitysurf.services.StockService;
 //import com.volatilitysurf.models.Option;
 
@@ -53,9 +53,9 @@ public class MainController {
 					return "redirect:/";
 				}
 				JSONObject result = response.getBody().getObject().getJSONObject("optionChain").getJSONArray("result").getJSONObject(0);
-				stockServ.addStock(result);//off to Process the stock!
-				System.out.println(result);
-				return "redirect:/";
+				Stock ticker = stockServ.addStock(result);//off to Process the stock!
+				session.setAttribute("ticker", ticker);//Save new stock to current session
+				return "redirect:/options";
 //				Redirect coming soon
 //				return "redirect:/options";
 		} catch (UnirestException e) {
