@@ -1,6 +1,6 @@
 package com.volatilitysurf.models;
 
-import java.util.Date;
+//import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,8 +23,9 @@ public class Option {
 	private String contractSymbol;
 	
 	private String contractSize;
-	private Date expiration;
-	private Date lastTradeDate;
+	//Adapting expiration and lastTradeDate to int for JSON key:value extraction
+	private int expiration;
+	private int lastTradeDate;
 	private double strike;
 	private double lastPrice;
 	private double bid;
@@ -67,19 +68,19 @@ public class Option {
 		this.contractSize = contractSize;
 	}
 
-	public Date getExpiration() {
+	public int getExpiration() {
 		return expiration;
 	}
 
-	public void setExpiration(Date expiration) {
+	public void setExpiration(int expiration) {
 		this.expiration = expiration;
 	}
 
-	public Date getLastTradeDate() {
+	public int getLastTradeDate() {
 		return lastTradeDate;
 	}
 
-	public void setLastTradeDate(Date lastTradeDate) {
+	public void setLastTradeDate(int lastTradeDate) {
 		this.lastTradeDate = lastTradeDate;
 	}
 

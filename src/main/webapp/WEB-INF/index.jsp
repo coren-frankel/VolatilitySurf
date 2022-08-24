@@ -9,7 +9,8 @@
 <title>VolatilitySurf</title>
 </head>
 <body>
-	<h1></h1>
+	<h1>Testing Phase** Currently will save any new ticker upload to DB</h1>
+	<h3>Be sure to avoid search tickers redundantly for now</h3>
 	<form action="/process" method="POST">
 		<label for="symbol">Search Options by Ticker:</label>
 		<input type="text" name="symbol"/>

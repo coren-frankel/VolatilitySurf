@@ -1,7 +1,5 @@
 package com.volatilitysurf.services;
 
-import java.util.ArrayList;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,31 +35,31 @@ public class StockService {
 		s.setRegularMarketChange(ticker.getDouble("regularMarketChange"));
 		s.setRegularMarketChangePercent(ticker.getDouble("regularMarketChangePercent"));
 		s.setRegularMarketTime(ticker.getInt("regularMarketTime"));
-		
-		//Consider Revision **Can be revisited for puts, and need to decide if
-		//forEach is the right way to unpack this package.
-		//It seems that the JSONObject is more accessible 
-		//than when we cast "each" as an Object with the forEach.
-		//Try regular for loop
-		for(Object each: calls) {
+		Stock newStock = stockRepo.save(s);//Save new Stock
+		for(int i = 0; i < calls.length(); i++) {//Save each option
+			JSONObject each = calls.getJSONObject(i);
 			Option o = new Option();
-//			o.setContractSymbol(each.contractSymbol);
-//			Throwing an error--loop needs work.
-			
-			
-			
-			
-			
-			
+			o.setContractSymbol(each.getString("contractSymbol"));
+			o.setContractSize(each.getString("contractSize"));
+			o.setExpiration(each.getInt("expiration"));
+			o.setLastTradeDate(each.getInt("lastTradeDate"));
+			o.setStrike(each.getDouble("strike"));
+			o.setLastPrice(each.getDouble("lastPrice"));
+			o.setBid(each.getDouble("bid"));
+			o.setAsk(each.getDouble("ask"));
+			o.setCurrency(each.getString("currency"));
+			o.setAbsoluteChange(each.getDouble("change"));
+			o.setPercentChange(each.getDouble("percentChange"));
+			o.setVolume(each.getInt("volume"));
+			o.setOpenInterest(each.getInt("openInterest"));
+			o.setImpliedVolatility(each.getDouble("impliedVolatility"));
+			o.setStock(s);
+			optRepo.save(o);
 		}
-		
-		
-//		return stockRepo.save(s);
-		//not saving data yet...
-		return s;
+		return newStock;
 	}
 	
 	public Stock updateStock(Stock s) {
-		return stockRepo.save(s);//There's no way this is sufficient updating
+		return stockRepo.save(s);//There's no way this is sufficient updating yet
 	}
 }
