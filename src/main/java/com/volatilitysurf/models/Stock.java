@@ -1,8 +1,9 @@
 package com.volatilitysurf.models;
 
-import java.util.Date;
+//import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -21,9 +22,10 @@ public class Stock {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-	
+	//What to do if I am setting values in the service...@Not null... 
 	@NotNull
 	@NotBlank
+	@Column(unique=true)
 	private String symbol;	
 
 	private String shortName;
@@ -33,13 +35,27 @@ public class Stock {
 	private double regularMarketPrice;
 	private double regularMarketChange;
 	private double regularMarketChangePercent;
-	private Date regularMarketTime;
+	//Change regularMarketTime to Int? Just number format 
+	private int regularMarketTime;
 	
 	@OneToMany(mappedBy="stock", fetch=FetchType.LAZY)
 	private List<Option> options;
 	
 
 	public Stock() {}
+	
+//	public Stock(String symbol, String shortName, String quoteSourceName, String fullExchangeName,
+//				String currency, double regularMarketPrice, double regularMarketChange, 
+//				double regularMarketChangePercent, Date regularMarketTime ) {
+//		this.symbol = symbol;
+//		this.shortName = shortName;
+//		this.quoteSourceName = quoteSourceName;
+//		this.fullExchangeName = fullExchangeName;
+//		this.currency = currency;
+//		this.regularMarketPrice = regularMarketPrice;
+//		this.regularMarketChange = regularMarketChange;
+//		this.regularMarketTime = regularMarketTime;
+//	}
 	
 	public Long getId() {
 		return id;
@@ -113,11 +129,11 @@ public class Stock {
 		this.regularMarketChangePercent = regularMarketChangePercent;
 	}
 
-	public Date getRegularMarketTime() {
+	public int getRegularMarketTime() {
 		return regularMarketTime;
 	}
 
-	public void setRegularMarketTime(Date regularMarketTime) {
+	public void setRegularMarketTime(int regularMarketTime) {
 		this.regularMarketTime = regularMarketTime;
 	}
 

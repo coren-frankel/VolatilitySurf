@@ -2,6 +2,7 @@ package com.volatilitysurf.models;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -18,8 +19,9 @@ public class Option {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-	
+	@Column(unique=true)
 	private String contractSymbol;
+	
 	private String contractSize;
 	private Date expiration;
 	private Date lastTradeDate;

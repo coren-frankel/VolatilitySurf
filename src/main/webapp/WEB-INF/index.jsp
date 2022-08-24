@@ -10,7 +10,7 @@
 </head>
 <body>
 	<h1></h1>
-	<form action="/options" method="POST">
+	<form action="/process" method="POST">
 		<label for="symbol">Search Options by Ticker:</label>
 		<input type="text" name="symbol"/>
 		<input type="submit" value="search" class="btn"/>
