@@ -1,5 +1,8 @@
 package com.volatilitysurf.services;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,15 +37,42 @@ public class StockService {
 		s.setRegularMarketPrice(ticker.getDouble("regularMarketPrice"));
 		s.setRegularMarketChange(ticker.getDouble("regularMarketChange"));
 		s.setRegularMarketChangePercent(ticker.getDouble("regularMarketChangePercent"));
-		s.setRegularMarketTime(ticker.getInt("regularMarketTime"));
+		Timestamp rmt = new Timestamp(ticker.getLong("regularMarketTime"));
+		s.setRegularMarketTime(rmt);
 		Stock newStock = stockRepo.save(s);//Save new Stock
 		for(int i = 0; i < calls.length(); i++) {//Save each option
 			JSONObject each = calls.getJSONObject(i);
 			Option o = new Option();
 			o.setContractSymbol(each.getString("contractSymbol"));
 			o.setContractSize(each.getString("contractSize"));
-			o.setExpiration(each.getInt("expiration"));
-			o.setLastTradeDate(each.getInt("lastTradeDate"));
+			Timestamp exp = new Timestamp(each.getLong("expiration"));
+			Date expDate = new Date(exp.getTime());
+			o.setExpiration(expDate);
+			Timestamp ltd = new Timestamp(each.getLong("lastTradeDate"));
+			o.setLastTradeDate(ltd);
+			o.setStrike(each.getDouble("strike"));
+			o.setLastPrice(each.getDouble("lastPrice"));
+			o.setBid(each.getDouble("bid"));
+			o.setAsk(each.getDouble("ask"));
+			o.setCurrency(each.getString("currency"));
+			o.setAbsoluteChange(each.getDouble("change"));
+			o.setPercentChange(each.getDouble("percentChange"));
+			o.setVolume(each.getInt("volume"));
+			o.setOpenInterest(each.getInt("openInterest"));
+			o.setImpliedVolatility(each.getDouble("impliedVolatility"));
+			o.setStock(s);
+			optRepo.save(o);
+		}
+		for(int i = 0; i < puts.length(); i++) {//Save each option
+			JSONObject each = puts.getJSONObject(i);
+			Option o = new Option();
+			o.setContractSymbol(each.getString("contractSymbol"));
+			o.setContractSize(each.getString("contractSize"));
+			Timestamp exp = new Timestamp(each.getLong("expiration"));
+			Date expDate = new Date(exp.getTime());
+			o.setExpiration(expDate);
+			Timestamp ltd = new Timestamp(each.getLong("lastTradeDate"));
+			o.setLastTradeDate(ltd);
 			o.setStrike(each.getDouble("strike"));
 			o.setLastPrice(each.getDouble("lastPrice"));
 			o.setBid(each.getDouble("bid"));

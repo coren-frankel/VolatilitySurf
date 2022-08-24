@@ -1,6 +1,6 @@
 package com.volatilitysurf.models;
 
-//import java.util.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -36,8 +36,17 @@ public class Stock {
 	private double regularMarketChange;
 	private double regularMarketChangePercent;
 	//Change regularMarketTime to Int? Just number format 
-	private int regularMarketTime;
+	private Timestamp regularMarketTime;
+	private String exchangeTimezoneShortName;
 	
+	public String getExchangeTimezoneShortName() {
+		return exchangeTimezoneShortName;
+	}
+
+	public void setExchangeTimezoneShortName(String exchangeTimezoneShortName) {
+		this.exchangeTimezoneShortName = exchangeTimezoneShortName;
+	}
+
 	@OneToMany(mappedBy="stock", fetch=FetchType.LAZY)
 	private List<Option> options;
 	
@@ -129,11 +138,11 @@ public class Stock {
 		this.regularMarketChangePercent = regularMarketChangePercent;
 	}
 
-	public int getRegularMarketTime() {
+	public Timestamp getRegularMarketTime() {
 		return regularMarketTime;
 	}
 
-	public void setRegularMarketTime(int regularMarketTime) {
+	public void setRegularMarketTime(Timestamp regularMarketTime) {
 		this.regularMarketTime = regularMarketTime;
 	}
 
