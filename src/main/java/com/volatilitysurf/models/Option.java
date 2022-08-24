@@ -23,8 +23,8 @@ public class Option {
 	@Column(unique=true)
 	private String contractSymbol;
 	
+	private String optionType; // "C" or "P" 
 	private String contractSize;
-	//Adapting expiration and lastTradeDate to int for JSON key:value extraction
 	private Date expiration;
 	private Timestamp lastTradeDate;
 	private double strike;
