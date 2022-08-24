@@ -37,14 +37,6 @@ public class Stock {
 	private Timestamp regularMarketTime;
 	private String exchangeTimezoneShortName;
 	
-	public String getExchangeTimezoneShortName() {
-		return exchangeTimezoneShortName;
-	}
-
-	public void setExchangeTimezoneShortName(String exchangeTimezoneShortName) {
-		this.exchangeTimezoneShortName = exchangeTimezoneShortName;
-	}
-
 	@OneToMany(mappedBy="stock", fetch=FetchType.LAZY)
 	private List<Option> options;
 	
@@ -63,6 +55,14 @@ public class Stock {
 //this.regularMarketTime = regularMarketTime;
 //}
 
+	public String getExchangeTimezoneShortName() {
+		return exchangeTimezoneShortName;
+	}
+
+	public void setExchangeTimezoneShortName(String exchangeTimezoneShortName) {
+		this.exchangeTimezoneShortName = exchangeTimezoneShortName;
+	}
+	
 	public Long getId() {
 		return id;
 	}

@@ -3,6 +3,7 @@ package com.volatilitysurf.services;
 import java.sql.Timestamp;
 import java.util.Date;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,47 +18,61 @@ public class OptionService {
 	@Autowired
 	OptionRepository optRepo;
 
-	public Option saveNewOption(JSONObject JSONoption, Stock stock, String optionType) {
-		Option o = new Option();
+	public void saveOptions(JSONObject options, Stock stock) {
+		JSONArray calls = options.getJSONArray("calls");
+		JSONArray puts = options.getJSONArray("puts");
 		
-		o.setStock(stock);
-		o.setOptionType(optionType);
+		for(int i = 0; i < calls.length(); i++) {
+			JSONObject call = calls.getJSONObject(i);
+			this.saveNewOption(call, stock, "C");
+		}
+		for(int i = 0; i < puts.length(); i++) {
+			JSONObject put = puts.getJSONObject(i);
+			this.saveNewOption(put, stock, "P");
+		}
+	}
+	
+	private Option saveNewOption(JSONObject JSONoption, Stock stock, String optionType) {
+		Option option = new Option();
+		
+		option.setStock(stock);
+		option.setOptionType(optionType);
 
-		o.setContractSymbol(JSONoption.getString("contractSymbol"));
-		o.setContractSize(JSONoption.getString("contractSize"));
+		option.setContractSymbol(JSONoption.getString("contractSymbol"));
+		option.setContractSize(JSONoption.getString("contractSize"));
 		Timestamp expiration = new Timestamp(JSONoption.getLong("expiration") * 1000);
 		Date expirationDate = new Date(expiration.getTime());
-		o.setExpiration(expirationDate);
+		option.setExpiration(expirationDate);
 		Timestamp lastTradeDate = new Timestamp(JSONoption.getLong("lastTradeDate") * 1000);
-		o.setLastTradeDate(lastTradeDate);
-		o.setStrike(JSONoption.getDouble("strike"));
-		o.setLastPrice(JSONoption.getDouble("lastPrice"));
+		option.setLastTradeDate(lastTradeDate);
+		option.setStrike(JSONoption.getDouble("strike"));
+		option.setLastPrice(JSONoption.getDouble("lastPrice"));
 		if(JSONoption.has("bid")) {			
-			o.setBid(JSONoption.getDouble("bid"));
+			option.setBid(JSONoption.getDouble("bid"));
 		} else {
-			o.setBid(null);
+			option.setBid(null);
 		}
 		if(JSONoption.has("ask")) {
-			o.setAsk(JSONoption.getDouble("ask"));
+			option.setAsk(JSONoption.getDouble("ask"));
 		} else {
-			o.setAsk(null);			
+			option.setAsk(null);			
 		}
-		o.setCurrency(JSONoption.getString("currency"));
-		o.setAbsoluteChange(JSONoption.getDouble("change"));
+		option.setCurrency(JSONoption.getString("currency"));
+		option.setAbsoluteChange(JSONoption.getDouble("change"));
 		if(JSONoption.has("percentChange")) {
-			o.setPercentChange(JSONoption.getDouble("percentChange"));			
+			option.setPercentChange(JSONoption.getDouble("percentChange"));			
 		} else {
-			o.setPercentChange(null);			
+			option.setPercentChange(null);			
 		}
 		if(JSONoption.has("volume")) {
-			o.setVolume(JSONoption.getInt("volume"));    			
+			option.setVolume(JSONoption.getInt("volume"));    			
 		} else {
-			o.setVolume(null);
+			option.setVolume(null);
 		}
-		o.setOpenInterest(JSONoption.getInt("openInterest"));
-		o.setImpliedVolatility(JSONoption.getDouble("impliedVolatility"));
-		o.setInTheMoney(JSONoption.getBoolean("inTheMoney"));
+		option.setOpenInterest(JSONoption.getInt("openInterest"));
+		option.setImpliedVolatility(JSONoption.getDouble("impliedVolatility"));
+		option.setInTheMoney(JSONoption.getBoolean("inTheMoney"));
 		
-		return optRepo.save(o);
+		return optRepo.save(option);
 	}
 }
