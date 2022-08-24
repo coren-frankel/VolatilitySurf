@@ -14,7 +14,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-
 @Entity
 @Table(name="stocks")
 public class Stock {
@@ -22,7 +21,7 @@ public class Stock {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-	//What to do if I am setting values in the service...@Not null... 
+	
 	@NotNull
 	@NotBlank
 	@Column(unique=true)
@@ -35,7 +34,6 @@ public class Stock {
 	private double regularMarketPrice;
 	private double regularMarketChange;
 	private double regularMarketChangePercent;
-	//Change regularMarketTime to Int? Just number format 
 	private Timestamp regularMarketTime;
 	private String exchangeTimezoneShortName;
 	
@@ -50,7 +48,6 @@ public class Stock {
 	@OneToMany(mappedBy="stock", fetch=FetchType.LAZY)
 	private List<Option> options;
 	
-
 	public Stock() {}
 	
 //	public Stock(String symbol, String shortName, String quoteSourceName, String fullExchangeName,
