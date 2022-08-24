@@ -15,7 +15,13 @@
 <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 <title>Options Page</title>
 </head>
-<body>
-	<h1><c:out value="${ticker.getShortName()}"/></h1>
+<body class="m-4">
+	<div class="d-flex justify-content-between align-items-center">
+		<h1><c:out value="${ticker.getShortName()}"/> (<c:out value="${ticker.getSymbol()}"/>)</h1>
+		<div class="d-flex justify-content-between">
+			<a href="#" class="btn btn-sm btn-outline-dark me-3">Volatility Surface</a>
+			<a href="/" class="btn btn-sm btn-outline-dark">Home</a>
+		</div>
+	</div>
 </body>
 </html>
