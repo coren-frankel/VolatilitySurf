@@ -1,10 +1,10 @@
-package com.sigmasurf;
+package com.volatilitysurf;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SigmaSurfApplicationTests {
+class VolatilitySurfApplicationTests {
 
 	@Test
 	void contextLoads() {
