@@ -22,22 +22,21 @@ public class Option {
     private Long id;
 	@Column(unique=true)
 	private String contractSymbol;
-	
 	private String optionType; // "C" or "P" 
 	private String contractSize;
 	private Date expiration;
 	private Timestamp lastTradeDate;
-	private double strike;
-	private double lastPrice;
-	private double bid;
-	private double ask;
+	private Double strike;
+	private Double lastPrice;
+	private Double bid;
+	private Double ask;
 	private String currency;
-	private double absoluteChange;
-	private double percentChange;
-	private int volume;
-	private int openInterest;
-	private double impliedVolatility;
-	private boolean inTheMoney;
+	private Double absoluteChange;
+	private Double percentChange;
+	private Integer volume;
+	private Integer openInterest;
+	private Double impliedVolatility;
+	private Boolean inTheMoney;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="stock_id")
@@ -59,6 +58,14 @@ public class Option {
 
 	public void setContractSymbol(String contractSymbol) {
 		this.contractSymbol = contractSymbol;
+	}
+
+	public String getOptionType() {
+		return optionType;
+	}
+
+	public void setOptionType(String optionType) {
+		this.optionType = optionType;
 	}
 
 	public String getContractSize() {
@@ -85,35 +92,35 @@ public class Option {
 		this.lastTradeDate = lastTradeDate;
 	}
 
-	public double getStrike() {
+	public Double getStrike() {
 		return strike;
 	}
 
-	public void setStrike(double strike) {
+	public void setStrike(Double strike) {
 		this.strike = strike;
 	}
 
-	public double getLastPrice() {
+	public Double getLastPrice() {
 		return lastPrice;
 	}
 
-	public void setLastPrice(double lastPrice) {
+	public void setLastPrice(Double lastPrice) {
 		this.lastPrice = lastPrice;
 	}
 
-	public double getBid() {
+	public Double getBid() {
 		return bid;
 	}
 
-	public void setBid(double bid) {
+	public void setBid(Double bid) {
 		this.bid = bid;
 	}
 
-	public double getAsk() {
+	public Double getAsk() {
 		return ask;
 	}
 
-	public void setAsk(double ask) {
+	public void setAsk(Double ask) {
 		this.ask = ask;
 	}
 
@@ -125,51 +132,51 @@ public class Option {
 		this.currency = currency;
 	}
 
-	public double getAbsoluteChange() {
+	public Double getAbsoluteChange() {
 		return absoluteChange;
 	}
 
-	public void setAbsoluteChange(double absoluteChange) {
+	public void setAbsoluteChange(Double absoluteChange) {
 		this.absoluteChange = absoluteChange;
 	}
 
-	public double getPercentChange() {
+	public Double getPercentChange() {
 		return percentChange;
 	}
 
-	public void setPercentChange(double percentChange) {
+	public void setPercentChange(Double percentChange) {
 		this.percentChange = percentChange;
 	}
 
-	public int getVolume() {
+	public Integer getVolume() {
 		return volume;
 	}
 
-	public void setVolume(int volume) {
+	public void setVolume(Integer volume) {
 		this.volume = volume;
 	}
 
-	public int getOpenInterest() {
+	public Integer getOpenInterest() {
 		return openInterest;
 	}
 
-	public void setOpenInterest(int openInterest) {
+	public void setOpenInterest(Integer openInterest) {
 		this.openInterest = openInterest;
 	}
 
-	public double getImpliedVolatility() {
+	public Double getImpliedVolatility() {
 		return impliedVolatility;
 	}
 
-	public void setImpliedVolatility(double impliedVolatility) {
+	public void setImpliedVolatility(Double impliedVolatility) {
 		this.impliedVolatility = impliedVolatility;
 	}
 
-	public boolean isInTheMoney() {
+	public Boolean getInTheMoney() {
 		return inTheMoney;
 	}
 
-	public void setInTheMoney(boolean inTheMoney) {
+	public void setInTheMoney(Boolean inTheMoney) {
 		this.inTheMoney = inTheMoney;
 	}
 
@@ -179,7 +186,5 @@ public class Option {
 
 	public void setStock(Stock stock) {
 		this.stock = stock;
-	}
-	
-	
+	}	
 }

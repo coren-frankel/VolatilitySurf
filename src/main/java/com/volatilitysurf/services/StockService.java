@@ -45,12 +45,12 @@ public class StockService {
 		Stock newStock = stockRepo.save(s);
 		
 		for(int i = 0; i < calls.length(); i++) {
-			JSONObject each = calls.getJSONObject(i);
-			optionServ.saveNewOption(each, newStock);
+			JSONObject call = calls.getJSONObject(i);
+			optionServ.saveNewOption(call, newStock, "C");
 		}
 		for(int i = 0; i < puts.length(); i++) {
-			JSONObject each = puts.getJSONObject(i);
-			optionServ.saveNewOption(each, newStock);
+			JSONObject put = puts.getJSONObject(i);
+			optionServ.saveNewOption(put, newStock, "P");
 		}
 		return newStock;
 	}

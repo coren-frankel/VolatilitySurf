@@ -31,9 +31,9 @@ public class Stock {
 	private String quoteSourceName;
 	private String fullExchangeName;
 	private String currency;
-	private double regularMarketPrice;
-	private double regularMarketChange;
-	private double regularMarketChangePercent;
+	private Double regularMarketPrice;
+	private Double regularMarketChange;
+	private Double regularMarketChangePercent;
 	private Timestamp regularMarketTime;
 	private String exchangeTimezoneShortName;
 	
@@ -49,20 +49,20 @@ public class Stock {
 	private List<Option> options;
 	
 	public Stock() {}
-	
+
 //	public Stock(String symbol, String shortName, String quoteSourceName, String fullExchangeName,
-//				String currency, double regularMarketPrice, double regularMarketChange, 
-//				double regularMarketChangePercent, Date regularMarketTime ) {
-//		this.symbol = symbol;
-//		this.shortName = shortName;
-//		this.quoteSourceName = quoteSourceName;
-//		this.fullExchangeName = fullExchangeName;
-//		this.currency = currency;
-//		this.regularMarketPrice = regularMarketPrice;
-//		this.regularMarketChange = regularMarketChange;
-//		this.regularMarketTime = regularMarketTime;
-//	}
-	
+//	String currency, double regularMarketPrice, double regularMarketChange, 
+//	double regularMarketChangePercent, Date regularMarketTime ) {
+//this.symbol = symbol;
+//this.shortName = shortName;
+//this.quoteSourceName = quoteSourceName;
+//this.fullExchangeName = fullExchangeName;
+//this.currency = currency;
+//this.regularMarketPrice = regularMarketPrice;
+//this.regularMarketChange = regularMarketChange;
+//this.regularMarketTime = regularMarketTime;
+//}
+
 	public Long getId() {
 		return id;
 	}
@@ -111,27 +111,27 @@ public class Stock {
 		this.currency = currency;
 	}
 
-	public double getRegularMarketPrice() {
+	public Double getRegularMarketPrice() {
 		return regularMarketPrice;
 	}
 
-	public void setRegularMarketPrice(double regularMarketPrice) {
+	public void setRegularMarketPrice(Double regularMarketPrice) {
 		this.regularMarketPrice = regularMarketPrice;
 	}
 
-	public double getRegularMarketChange() {
+	public Double getRegularMarketChange() {
 		return regularMarketChange;
 	}
 
-	public void setRegularMarketChange(double regularMarketChange) {
+	public void setRegularMarketChange(Double regularMarketChange) {
 		this.regularMarketChange = regularMarketChange;
 	}
 
-	public double getRegularMarketChangePercent() {
+	public Double getRegularMarketChangePercent() {
 		return regularMarketChangePercent;
 	}
 
-	public void setRegularMarketChangePercent(double regularMarketChangePercent) {
+	public void setRegularMarketChangePercent(Double regularMarketChangePercent) {
 		this.regularMarketChangePercent = regularMarketChangePercent;
 	}
 
@@ -150,4 +150,5 @@ public class Stock {
 	public void setOptions(List<Option> options) {
 		this.options = options;
 	}
+	
 }
