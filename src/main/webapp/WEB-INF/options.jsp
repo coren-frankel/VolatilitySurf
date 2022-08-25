@@ -23,5 +23,21 @@
 			<a href="/" class="btn btn-sm btn-outline-dark">Home</a>
 		</div>
 	</div>
+	<br>
+	<h3>
+		<c:set var="currency" value="${ticker.getCurrency()}"/>
+		<c:choose>
+			<c:when test="${currency == 'USD'}">$</c:when>
+			<c:when test="${currency == 'GBP'}">£</c:when>
+			<c:when test="${currency == 'EUR'}">€</c:when>
+			<c:otherwise>$<c:out value="${currency}"/></c:otherwise>
+		</c:choose>
+		<c:out value="${ticker.getRegularMarketPrice()}"/> 
+		(<c:if test="${ticker.getRegularMarketChangePercent() > 0}"><span class="text-success">+</c:if>
+		<c:if test="${ticker.getRegularMarketChangePercent() < 0}"><span class="text-danger"></c:if>
+		<fmt:formatNumber type="number" pattern="###.##%" value="${ticker.getRegularMarketChangePercent()}"/></span>)
+	</h3>
+	<h3>Closing price <c:out value="${ticker.getRegularMarketTime()}"/></h3>
+	
 </body>
 </html>
