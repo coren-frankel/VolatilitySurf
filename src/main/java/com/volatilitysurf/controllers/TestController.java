@@ -6,7 +6,7 @@ import java.net.URLEncoder;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
-import org.springframework.web.bind.annotation.GetMapping;
+//import org.springframework.web.bind.annotation.GetMapping;
 
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
@@ -16,7 +16,6 @@ import com.volatilitysurf.models.Stock;
 
 public class TestController {
 	
-	@GetMapping("/TestRoute")
 	public void testTwelve(HttpSession session) throws UnsupportedEncodingException {
 		Stock ticker = (Stock) session.getAttribute("ticker");
 		String symbol = ticker.getSymbol();
@@ -41,22 +40,18 @@ public class TestController {
 				return;
 			}
 			JSONArray result = response.getBody().getObject().getJSONArray("dates");
-			int cap;
-			if(result.length()>12) {
-				cap = 12;
-			}
-			for(int each : result) {
-				
-			}
+//			for(each : result) {
+//				
+//			}
 		} catch (UnirestException e) {
 			System.out.printf("get: %s", e.getMessage());
 		}
 		
 		//CALL TWELVE AGAIN TO GET STOCKS FROM SUBSEQUENT GATHERED EXPIRIES
-		HttpResponse<String> response = Unirest.get("https://twelve-data1.p.rapidapi.com/options/chain?symbol=AAPL&expiration_date=2022-08-26")
-				.header("X-RapidAPI-Key", "ec2d471e81mshd1d781daa45de8ap15487djsn98d072fb2757")
-				.header("X-RapidAPI-Host", "twelve-data1.p.rapidapi.com")
-				.asString();
+//		HttpResponse<String> response = Unirest.get("https://twelve-data1.p.rapidapi.com/options/chain?symbol=AAPL&expiration_date=2022-08-26")
+//				.header("X-RapidAPI-Key", "ec2d471e81mshd1d781daa45de8ap15487djsn98d072fb2757")
+//				.header("X-RapidAPI-Host", "twelve-data1.p.rapidapi.com")
+//				.asString();
 		
 	}
 }
