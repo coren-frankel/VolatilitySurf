@@ -35,7 +35,18 @@
 		<c:if test="${ticker.getRegularMarketChangePercent() < 0}"><span class="text-danger fs-5"><fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${ticker.getRegularMarketChange()}"/> (</c:if>
 		<fmt:formatNumber type="PERCENT" maxFractionDigits="2" minFractionDigits="2" value="${ticker.getRegularMarketChangePercent()/100}"/>)</span>
 	</h3>
-	<h3>Closing price <fmt:formatDate type="date" value="${ticker.getRegularMarketTime()}"/></h3>
+	
+	<fmt:timeZone value="US/Eastern"><!-- Hard Coding the timezone for NY Stock exchange -->
+	<jsp:useBean id="now" class="java.util.Date"/>
+	<%-- <c:set var="" value="${now}"/> --%>
+	
+	<%-- <c:choose>
+		<c:when test="${}"> --%>
+			<span>As of <fmt:formatDate type="Time" timeStyle="long" timeZone="US/Eastern" value="${ticker.getRegularMarketTime()}"/> Market Open</span>
+		<%-- </c:when>
+		<c:otherwise><span>Closing price <fmt:formatDate type="Date" dateStyle="medium" value="${ticker.getRegularMarketTime()}"/></span></c:otherwise>
+	</c:choose> --%>
+	</fmt:timeZone>
 	<table class="table table-striped table-secondary text-center" style="font-size:60%;">
 		<thead>
 			<tr style="font-size:85%;">
@@ -56,7 +67,7 @@
 			<c:forEach var="option" items="${ticker.getOptions()}">
 			<tr>
 				<td><c:out value="${option.getContractSymbol()}"/></td>
-				<td><c:out value="${option.getLastTradeDate()}"/></td>
+				<td><fmt:formatDate type="both" dateStyle="SHORT"  timeStyle="long" timeZone="US/Eastern" value="${option.getLastTradeDate()}"/></td>
 				<td><fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${option.getStrike()}"/></td>
 				<td><fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${option.getLastPrice()}"/></td>
 				<td><fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${option.getBid()}"/></td>
