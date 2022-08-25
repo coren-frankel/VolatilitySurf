@@ -78,14 +78,14 @@ public class TestController {
 				JSONArray expiries = result.getJSONArray("expirationDates");
 				session.setAttribute("expiries", expiries);
 				JSONObject quote = result.getJSONObject("quote");
-				Stock ticker = stockServ.addStock(quote);
+//				Stock ticker = stockServ.addStock(quote);
 				
 				JSONObject options = result.getJSONArray("options").getJSONObject(0);
-				optionServ.saveOptions(options, ticker);
+//				optionServ.saveOptions(options, ticker);
 				
-				ticker.setOptions(optionServ.getOptionsByStock(ticker));
+//				ticker.setOptions(optionServ.getOptionsByStock(ticker));
 
-				session.setAttribute("ticker", ticker);
+//				session.setAttribute("ticker", ticker);
 				return "redirect:/options";
 		} catch (UnirestException e) {
 			System.out.printf("get: %s", e.getMessage());
