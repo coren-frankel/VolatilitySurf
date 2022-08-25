@@ -8,9 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<!-- for Bootstrap CSS -->
 <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css">
-<!-- For any Bootstrap that uses JS or jQuery-->
 <script src="/webjars/jquery/jquery.min.js"></script>
 <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 <title>Options Page</title>
@@ -24,7 +22,7 @@
 		</div>
 	</div>
 	<br>
-	<h3>
+	<h3><!-- Do we want the currency symbol? Realized Yahoo doesn't have it. -->
 		<c:set var="currency" value="${ticker.getCurrency()}"/>
 		<c:choose>
 			<c:when test="${currency == 'USD'}">$</c:when>
@@ -32,15 +30,15 @@
 			<c:when test="${currency == 'EUR'}">€</c:when>
 			<c:otherwise>$<c:out value="${currency}"/></c:otherwise>
 		</c:choose>
-		<c:out value="${ticker.getRegularMarketPrice()}"/> 
+		<fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${ticker.getRegularMarketPrice()}"/> 
 		<c:if test="${ticker.getRegularMarketChangePercent() > 0}"><span class="text-success fs-5">+<fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${ticker.getRegularMarketChange()}"/> (+</c:if>
 		<c:if test="${ticker.getRegularMarketChangePercent() < 0}"><span class="text-danger fs-5"><c:out value="${ticker.getRegularMarketChange()}"/> (</c:if>
 		<fmt:formatNumber type="PERCENT" maxFractionDigits="2" minFractionDigits="2" value="${ticker.getRegularMarketChangePercent()/100}"/>)</span>
 	</h3>
 	<h3>Closing price <fmt:formatDate type="date" value="${ticker.getRegularMarketTime()}"/></h3>
-	<table class="table table-striped table-secondary" style="font-size:50%;">
+	<table class="table table-striped table-secondary text-center" style="font-size:60%;">
 		<thead>
-			<tr>
+			<tr style="font-size:85%;">
 				<th>Contract Name</th>
 				<th>Last Trade Date</th>
 				<th>Strike</th>
@@ -59,15 +57,27 @@
 			<tr>
 				<td><c:out value="${option.getContractSymbol()}"/></td>
 				<td><c:out value="${option.getLastTradeDate()}"/></td>
-				<td><c:out value="${option.getStrike()}"/></td>
-				<td><c:out value="${option.getLastPrice()}"/></td>
-				<td><c:out value="${option.getBid()}"/></td>
-				<td><c:out value="${option.getAsk()}"/></td>
-				<td><fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${option.getAbsoluteChange()}"/></td>
-				<td><fmt:formatNumber type="PERCENT" maxFractionDigits="2" minFractionDigits="2" value="${option.getPercentChange()/100}"/></td>
+				<td><fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${option.getStrike()}"/></td>
+				<td><fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${option.getLastPrice()}"/></td>
+				<td><fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${option.getBid()}"/></td>
+				<td><fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${option.getAsk()}"/></td>
+				<c:choose>
+					<c:when test="${option.getAbsoluteChange() > 0}">
+						<td class="text-success">+<fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${option.getAbsoluteChange()}"/></td>
+						<td class="text-success">+<fmt:formatNumber type="PERCENT" maxFractionDigits="2" minFractionDigits="2" value="${option.getPercentChange()/100}"/></td>
+					</c:when>
+					<c:when test="${option.getAbsoluteChange() < 0}">
+						<td class="text-danger"><fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${option.getAbsoluteChange()}"/></td>
+						<td class="text-danger"><fmt:formatNumber type="PERCENT" maxFractionDigits="2" minFractionDigits="2" value="${option.getPercentChange()/100}"/></td>
+					</c:when>
+					<c:otherwise>
+						<td>0.00</td>
+						<td> - </td>
+					</c:otherwise>
+				</c:choose>
 				<td><c:out value="${option.getVolume()}"/></td>
 				<td><c:out value="${option.getOpenInterest()}"/></td>
-				<td><c:out value="${option.getImpliedVolatility()}"/></td>
+				<td><fmt:formatNumber type="PERCENT" maxFractionDigits="2" minFractionDigits="2" value="${option.getImpliedVolatility()}"/></td>
 			</tr>
 			</c:forEach>
 		</tbody>
