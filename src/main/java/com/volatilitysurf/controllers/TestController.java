@@ -2,7 +2,6 @@ package com.volatilitysurf.controllers;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 
@@ -16,40 +15,9 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.volatilitysurf.models.Stock;
-
+//Not a real controller! Just a code building grounds...
 public class TestController {
-	//Alternative API -- Not in use
-//	public void retrieveTwelveDates(HttpSession session) throws UnsupportedEncodingException {
-//		Stock ticker = (Stock) session.getAttribute("ticker");
-//		String symbol = ticker.getSymbol();
-//		String host1 = "https://twelve-data1.p.rapidapi.com/options/expiration?";
-//		String charset = "UTF-8";
-//		String x_rapidapi_key = "ec2d471e81mshd1d781daa45de8ap15487djsn98d072fb2757";
-//		String x_rapidapi_host = "twelve-data1.p.rapidapi.com";
-//		String query1 = String.format("symbol=%s", URLEncoder.encode(symbol, charset));
-//		String url1 = host1 + query1;//Change??
-//		//CALL TO TWELVE API USING TICKER SYMBOL TO GATHER OPTION EXPIRATION DATES
-//		HttpResponse<JsonNode> response1;
-//		try { response1 = Unirest.get(url1)
-//				.header("X-RapidAPI-Key", x_rapidapi_key)
-//				.header("X-RapidAPI-Host", x_rapidapi_host)
-//				.asJson();
-//			String status = response1.getBody().getObject().getString("status");
-//			if(status == "error") {
-//				System.out.println("Error getting request...");
-//				return;
-//			}
-//			JSONArray result = response1.getBody().getObject().getJSONArray("dates");
-//			ArrayList<String> dates = new ArrayList<String>();
-//			for(int i = 0; i < result.length();i++) {
-//				
-//				
-//			}
-//		} catch (UnirestException e) {
-//			System.out.printf("get: %s", e.getMessage());
-//		}
-//	}
-	//pull out dates!
+	//this holds how we pull out expiration dates!
 	public String callToMboum(
 			@RequestParam("symbol") String symbol,
 			HttpSession session) 
@@ -75,6 +43,7 @@ public class TestController {
 					return "redirect:/";
 				}
 				JSONObject result = response.getBody().getObject().getJSONObject("optionChain").getJSONArray("result").getJSONObject(0);
+				//Collect array of expirations per ticker
 				JSONArray expiries = result.getJSONArray("expirationDates");
 				session.setAttribute("expiries", expiries);
 				JSONObject quote = result.getJSONObject("quote");
@@ -92,8 +61,38 @@ public class TestController {
 		}
 		return "redirect:/";
 	}
-	public void getMoreOptionsByExpiry(HttpSession session) {
+	public Stock fetchMoreOptionsByExpiry(HttpSession session)
+							throws UnsupportedEncodingException {
+		//Unpacking list of expirations from session
 		JSONArray expiries = (JSONArray) session.getAttribute("expiries");
-		
+		//Unpacking list of ticker Stock object from session
+		Stock ticker = (Stock) session.getAttribute("ticker");
+		String symbol = ticker.getSymbol();
+		String host = "https://mboum-finance.p.rapidapi.com/op/option";
+		String charset = "UTF-8";
+		String x_rapidapi_host = "mboum-finance.p.rapidapi.com";
+		String x_rapidapi_key = "ec2d471e81mshd1d781daa45de8ap15487djsn98d072fb2757";
+		for(int i = 1; i < expiries.length(); i++) {
+			String expiry = expiries.getString(i);
+			String query = String.format("expiration=%s&symbol=%s", URLEncoder.encode(expiry, charset),URLEncoder.encode(symbol, charset));
+			String url = host + "?" + query;
+			HttpResponse<JsonNode> response;
+			try { response = Unirest.get(url)
+					.header("X-RapidAPI-Key", x_rapidapi_key)
+					.header("X-RapidAPI-Host", x_rapidapi_host)
+					.asJson();
+				//Contain the options object
+				JSONObject options = response.getBody().getObject().getJSONObject("optionChain").getJSONArray("result").getJSONObject(0).getJSONArray("options").getJSONObject(0);
+				//Send to options service for saving
+//				optionServ.saveOptions(options, ticker);
+				//optionServ not loaded here ^^ commented out to avoid errors
+			} catch (UnirestException e) {
+				System.out.printf("get: %s", e.getMessage());
+			}
+			
+		}
+//		ticker.setOptions(optionServ.getOptionsByStock(ticker));
+		//Commented out ^^^ until broken up for optionServ access
+		return ticker; //something? the stock object? 
 	}
 }
