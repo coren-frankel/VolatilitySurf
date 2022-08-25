@@ -33,9 +33,9 @@
 			<c:otherwise>$<c:out value="${currency}"/></c:otherwise>
 		</c:choose>
 		<c:out value="${ticker.getRegularMarketPrice()}"/> 
-		(<c:if test="${ticker.getRegularMarketChangePercent() > 0}"><span class="text-success">+</c:if>
-		<c:if test="${ticker.getRegularMarketChangePercent() < 0}"><span class="text-danger"></c:if>
-		<fmt:formatNumber type="number" pattern="##.##%" value="${ticker.getRegularMarketChangePercent()}"/></span>)
+		<c:if test="${ticker.getRegularMarketChangePercent() > 0}"><span class="text-success fs-5">+<fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${ticker.getRegularMarketChange()}"/> (+</c:if>
+		<c:if test="${ticker.getRegularMarketChangePercent() < 0}"><span class="text-danger fs-5"><c:out value="${ticker.getRegularMarketChange()}"/> (</c:if>
+		<fmt:formatNumber type="PERCENT" maxFractionDigits="2" minFractionDigits="2" value="${ticker.getRegularMarketChangePercent()/100}"/>)</span>
 	</h3>
 	<h3>Closing price <fmt:formatDate type="date" value="${ticker.getRegularMarketTime()}"/></h3>
 	<table class="table table-striped table-secondary" style="font-size:50%;">
@@ -63,8 +63,8 @@
 				<td><c:out value="${option.getLastPrice()}"/></td>
 				<td><c:out value="${option.getBid()}"/></td>
 				<td><c:out value="${option.getAsk()}"/></td>
-				<td><c:out value="${option.getAbsoluteChange()}"/></td>
-				<td><c:out value="${option.getPercentChange()}"/></td>
+				<td><fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${option.getAbsoluteChange()}"/></td>
+				<td><fmt:formatNumber type="PERCENT" maxFractionDigits="2" minFractionDigits="2" value="${option.getPercentChange()/100}"/></td>
 				<td><c:out value="${option.getVolume()}"/></td>
 				<td><c:out value="${option.getOpenInterest()}"/></td>
 				<td><c:out value="${option.getImpliedVolatility()}"/></td>
