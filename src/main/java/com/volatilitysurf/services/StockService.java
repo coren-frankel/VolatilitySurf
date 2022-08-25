@@ -1,5 +1,12 @@
 package com.volatilitysurf.services;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
+
 import java.sql.Timestamp;
 
 import org.json.JSONObject;
@@ -13,6 +20,30 @@ import com.volatilitysurf.repositories.StockRepository;
 public class StockService {
 	@Autowired
 	private StockRepository stockRepo;
+	
+	public JSONObject fetchStockAndOptionData(String symbol) 
+			throws UnsupportedEncodingException{
+		symbol = symbol.toUpperCase();
+		
+		String host = "https://mboum-finance.p.rapidapi.com/op/option";
+		String charset = "UTF-8";
+		String x_rapidapi_host = "mboum-finance.p.rapidapi.com";
+		String x_rapidapi_key = "ec2d471e81mshd1d781daa45de8ap15487djsn98d072fb2757";
+		String query = String.format("symbol=%s", URLEncoder.encode(symbol, charset));
+		String url = host + "?" + query;
+		
+		HttpResponse<JsonNode> response;
+		try { response = Unirest.get(url)
+				.header("X-RapidAPI-Key", x_rapidapi_key)
+				.header("X-RapidAPI-Host", x_rapidapi_host)
+				.asJson();
+				return response.getBody().getObject().getJSONObject("optionChain").getJSONArray("result").getJSONObject(0);
+		} 
+		catch (UnirestException e) {
+			System.out.printf("get: %s", e.getMessage());
+			return null;
+		}				
+	}
 	
 	public Stock addStock(JSONObject quote) {
 		Stock stock = new Stock();
