@@ -1,5 +1,7 @@
 package com.volatilitysurf.services;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -9,6 +11,10 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import com.volatilitysurf.models.Option;
 import com.volatilitysurf.models.Stock;
 import com.volatilitysurf.repositories.OptionRepository;
@@ -22,8 +28,32 @@ public class OptionService {
 	public List<Option> getOptionsByStock(Stock stock){
 		return optionRepo.findByStock(stock);
 	}
+	
+	public JSONObject fetchOptionData(Stock stock, String expiry)
+			throws UnsupportedEncodingException	{
+		String host = "https://mboum-finance.p.rapidapi.com/op/option";
+		String charset = "UTF-8";
+		String x_rapidapi_host = "mboum-finance.p.rapidapi.com";
+		String x_rapidapi_key = "ec2d471e81mshd1d781daa45de8ap15487djsn98d072fb2757";
+		String query = String.format("expiration=%s&symbol=%s", URLEncoder.encode(expiry, charset),URLEncoder.encode(stock.getSymbol(), charset));
+		String url = host + "?" + query;
+		
+		HttpResponse<JsonNode> response;
+		
+		try { response = Unirest.get(url)
+				.header("X-RapidAPI-Key", x_rapidapi_key)
+				.header("X-RapidAPI-Host", x_rapidapi_host)
+				.asJson();	
+			JSONObject options = response.getBody().getObject().getJSONObject("optionChain").getJSONArray("result").getJSONObject(0).getJSONArray("options").getJSONObject(0);	
+			return options;
+		} 
+		catch (UnirestException e) {
+			System.out.printf("get: %s", e.getMessage());
+			return null;
+		}
+	}
 
-	public void saveOptions(JSONObject options, Stock stock) {
+	public void saveOptions(Stock stock, JSONObject options) {
 		JSONArray calls = options.getJSONArray("calls");
 		JSONArray puts = options.getJSONArray("puts");
 		

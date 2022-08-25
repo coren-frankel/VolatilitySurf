@@ -21,7 +21,7 @@ public class StockService {
 	@Autowired
 	private StockRepository stockRepo;
 	
-	public JSONObject fetchStockAndOptionData(String symbol) 
+	public JSONObject fetchStockData(String symbol) 
 			throws UnsupportedEncodingException{
 		symbol = symbol.toUpperCase();
 		

@@ -68,11 +68,11 @@ public class TestController {
 		//Unpacking list of ticker Stock object from session
 		Stock ticker = (Stock) session.getAttribute("ticker");
 		String symbol = ticker.getSymbol();
-		String host = "https://mboum-finance.p.rapidapi.com/op/option";
-		String charset = "UTF-8";
-		String x_rapidapi_host = "mboum-finance.p.rapidapi.com";
-		String x_rapidapi_key = "ec2d471e81mshd1d781daa45de8ap15487djsn98d072fb2757";
 		for(int i = 1; i < expiries.length(); i++) {
+			String host = "https://mboum-finance.p.rapidapi.com/op/option";
+			String charset = "UTF-8";
+			String x_rapidapi_host = "mboum-finance.p.rapidapi.com";
+			String x_rapidapi_key = "ec2d471e81mshd1d781daa45de8ap15487djsn98d072fb2757";
 			String expiry = expiries.getString(i);
 			String query = String.format("expiration=%s&symbol=%s", URLEncoder.encode(expiry, charset),URLEncoder.encode(symbol, charset));
 			String url = host + "?" + query;
