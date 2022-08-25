@@ -38,6 +38,39 @@
 		<fmt:formatNumber type="number" pattern="###.##%" value="${ticker.getRegularMarketChangePercent()}"/></span>)
 	</h3>
 	<h3>Closing price <c:out value="${ticker.getRegularMarketTime()}"/></h3>
-	
+	<table class="table table-striped table-secondary" style="font-size:50%;">
+		<thead>
+			<tr>
+				<th>Contract Name</th>
+				<th>Last Trade Date</th>
+				<th>Strike</th>
+				<th>Last Price</th>
+				<th>Bid</th>
+				<th>Ask</th>
+				<th>Change</th>
+				<th>% Change</th>
+				<th>Volume</th>
+				<th>Open Interest</th>
+				<th>Implied Volatility</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach var="option" items="${ticker.getOptions()}">
+			<tr>
+				<td><c:out value="${option.getContractSymbol()}"/></td>
+				<td><c:out value="${option.getLastTradeDate()}"/></td>
+				<td><c:out value="${option.getStrike()}"/></td>
+				<td><c:out value="${option.getLastPrice()}"/></td>
+				<td><c:out value="${option.getBid()}"/></td>
+				<td><c:out value="${option.getAsk()}"/></td>
+				<td><c:out value="${option.getAbsoluteChange()}"/></td>
+				<td><c:out value="${option.getPercentChange()}"/></td>
+				<td><c:out value="${option.getVolume()}"/></td>
+				<td><c:out value="${option.getOpenInterest()}"/></td>
+				<td><c:out value="${option.getImpliedVolatility()}"/></td>
+			</tr>
+			</c:forEach>
+		</tbody>
+	</table>
 </body>
 </html>
