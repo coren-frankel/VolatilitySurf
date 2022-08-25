@@ -44,14 +44,35 @@ public class OptionService {
 		option.setOptionType(optionType);
 
 		option.setContractSymbol(JSONoption.getString("contractSymbol"));
-		option.setContractSize(JSONoption.getString("contractSize"));
-		Timestamp expiration = new Timestamp(JSONoption.getLong("expiration") * 1000);
-		Date expirationDate = new Date(expiration.getTime());
-		option.setExpiration(expirationDate);
-		Timestamp lastTradeDate = new Timestamp(JSONoption.getLong("lastTradeDate") * 1000);
-		option.setLastTradeDate(lastTradeDate);
-		option.setStrike(JSONoption.getDouble("strike"));
-		option.setLastPrice(JSONoption.getDouble("lastPrice"));
+		
+		if(JSONoption.has("contractSize")) {
+			option.setContractSize(JSONoption.getString("contractSize"));			
+		} else {
+			option.setContractSize(null);
+		}
+		if(JSONoption.has("expiration")) {
+			Timestamp expiration = new Timestamp(JSONoption.getLong("expiration") * 1000);
+			Date expirationDate = new Date(expiration.getTime());			
+			option.setExpiration(expirationDate);
+		} else {
+			option.setExpiration(null);
+		}
+		if(JSONoption.has("lastTradeDate")) {
+			Timestamp lastTradeDate = new Timestamp(JSONoption.getLong("lastTradeDate") * 1000);
+			option.setLastTradeDate(lastTradeDate);			
+		} else {
+			option.setLastTradeDate(null);
+		}
+		if(JSONoption.has("strike")){
+			option.setStrike(JSONoption.getDouble("strike"));			
+		} else {
+			option.setStrike(null);
+		}
+		if(JSONoption.has("lastPrice")) {
+			option.setLastPrice(JSONoption.getDouble("lastPrice"));			
+		} else {
+			option.setLastPrice(null);
+		}
 		if(JSONoption.has("bid")) {			
 			option.setBid(JSONoption.getDouble("bid"));
 		} else {
@@ -62,8 +83,16 @@ public class OptionService {
 		} else {
 			option.setAsk(null);			
 		}
-		option.setCurrency(JSONoption.getString("currency"));
-		option.setAbsoluteChange(JSONoption.getDouble("change"));
+		if(JSONoption.has("currency")) {
+			option.setCurrency(JSONoption.getString("currency"));			
+		} else {
+			option.setCurrency(null);
+		}
+		if(JSONoption.has("change")) {
+			option.setAbsoluteChange(JSONoption.getDouble("change"));			
+		} else {
+			option.setAbsoluteChange(null);
+		}
 		if(JSONoption.has("percentChange")) {
 			option.setPercentChange(JSONoption.getDouble("percentChange"));			
 		} else {
@@ -74,9 +103,21 @@ public class OptionService {
 		} else {
 			option.setVolume(null);
 		}
-		option.setOpenInterest(JSONoption.getInt("openInterest"));
-		option.setImpliedVolatility(JSONoption.getDouble("impliedVolatility"));
-		option.setInTheMoney(JSONoption.getBoolean("inTheMoney"));
+		if(JSONoption.has("openInterest")) {
+			option.setOpenInterest(JSONoption.getInt("openInterest"));			
+		} else {
+			option.setOpenInterest(null);
+		}
+		if(JSONoption.has("impliedVolatility")) {
+			option.setImpliedVolatility(JSONoption.getDouble("impliedVolatility"));			
+		} else {
+			option.setImpliedVolatility(null);
+		}
+		if(JSONoption.has("inTheMoney")) {
+			option.setInTheMoney(JSONoption.getBoolean("inTheMoney"));			
+		} else {
+			option.setInTheMoney(null);
+		}
 		
 		return optionRepo.save(option);
 	}
