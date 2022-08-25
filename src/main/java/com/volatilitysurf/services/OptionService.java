@@ -2,6 +2,7 @@ package com.volatilitysurf.services;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -16,7 +17,11 @@ import com.volatilitysurf.repositories.OptionRepository;
 public class OptionService {
 	
 	@Autowired
-	OptionRepository optRepo;
+	OptionRepository optionRepo;
+	
+	public List<Option> getOptionsByStock(Stock stock){
+		return optionRepo.findByStock(stock);
+	}
 
 	public void saveOptions(JSONObject options, Stock stock) {
 		JSONArray calls = options.getJSONArray("calls");
@@ -73,6 +78,6 @@ public class OptionService {
 		option.setImpliedVolatility(JSONoption.getDouble("impliedVolatility"));
 		option.setInTheMoney(JSONoption.getBoolean("inTheMoney"));
 		
-		return optRepo.save(option);
+		return optionRepo.save(option);
 	}
 }

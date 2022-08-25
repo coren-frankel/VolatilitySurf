@@ -35,7 +35,7 @@ public class MainController {
 		return "index.jsp";
 	}
 	
-	@PostMapping("/process")
+	@PostMapping("/fetch")
 	public String callToMboum(
 			@RequestParam("symbol") String symbol,
 			HttpSession session) 
@@ -68,6 +68,8 @@ public class MainController {
 				JSONObject options = result.getJSONArray("options").getJSONObject(0);
 				optionServ.saveOptions(options, ticker);
 				
+				ticker.setOptions(optionServ.getOptionsByStock(ticker));
+
 				session.setAttribute("ticker", ticker);
 				return "redirect:/options";
 		} 

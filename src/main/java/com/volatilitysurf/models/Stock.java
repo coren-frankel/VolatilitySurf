@@ -42,27 +42,6 @@ public class Stock {
 	
 	public Stock() {}
 
-//	public Stock(String symbol, String shortName, String quoteSourceName, String fullExchangeName,
-//	String currency, double regularMarketPrice, double regularMarketChange, 
-//	double regularMarketChangePercent, Date regularMarketTime ) {
-//this.symbol = symbol;
-//this.shortName = shortName;
-//this.quoteSourceName = quoteSourceName;
-//this.fullExchangeName = fullExchangeName;
-//this.currency = currency;
-//this.regularMarketPrice = regularMarketPrice;
-//this.regularMarketChange = regularMarketChange;
-//this.regularMarketTime = regularMarketTime;
-//}
-
-	public String getExchangeTimezoneShortName() {
-		return exchangeTimezoneShortName;
-	}
-
-	public void setExchangeTimezoneShortName(String exchangeTimezoneShortName) {
-		this.exchangeTimezoneShortName = exchangeTimezoneShortName;
-	}
-	
 	public Long getId() {
 		return id;
 	}
@@ -151,4 +130,11 @@ public class Stock {
 		this.options = options;
 	}
 	
+	public String getExchangeTimezoneShortName() {
+		return exchangeTimezoneShortName;
+	}
+
+	public void setExchangeTimezoneShortName(String exchangeTimezoneShortName) {
+		this.exchangeTimezoneShortName = exchangeTimezoneShortName;
+	}
 }
