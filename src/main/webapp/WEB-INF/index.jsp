@@ -12,10 +12,10 @@
 <body>
 	<div class="container">
 		<div class="row mt-5">
-			<div class="col-4 mx-auto">
+			<div class="col col-5 mx-auto">
 
-				<h1>VolatilitySurf</h1>
-					<div class="d-flex">
+				<h1 class="text-center">VolatilitySurf</h1>
+					<div class="d-flex justify-content-center">
 				<form action="/fetch" method="POST">
 						<div class="input-group">
 							<input type="text" name="symbol" placeholder="Ticker Search" class="form-control"/>
