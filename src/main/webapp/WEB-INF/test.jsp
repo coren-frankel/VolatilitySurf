@@ -13,14 +13,14 @@
 <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 <script src='https://cdn.plot.ly/plotly-2.14.0.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js'></script>
-<script src="/js/script.js" defer></script>
+<script src="/js/test.js" defer></script>
 <title><c:out value="${ticker.getSymbol()}"/>'s Volatility Surface</title>
 </head>
 <body class="m-4">
 	<div class="d-flex justify-content-between align-items-center">
 		<h3><c:out value="${ticker.getShortName()}"/> (<c:out value="${ticker.getSymbol()}"/>)</h3>
 		<div class="d-flex justify-content-between">
-			<a href="/options" class="btn btn-sm btn-outline-dark me-3">Back to Options</a>
+			<a href="/test/options" class="btn btn-sm btn-outline-dark me-3">Back to Options</a>
 			<a href="/" class="btn btn-sm btn-outline-dark">Home</a>
 		</div>
 	</div>
@@ -50,4 +50,5 @@
 	<div id="myDiv" class="d-flex justify-content-center"></div>
 </body>
 </html>
+	
 	

@@ -12,17 +12,17 @@
 <body>
 	<div class="container">
 		<div class="row mt-5">
-			<div class="col col-4 mx-auto">
+			<div class="col-4 mx-auto">
 
 				<h1>VolatilitySurf</h1>
+					<div class="d-flex row">
 				<form action="/fetch" method="POST">
-					<div class="d-flex">
 						<div class="input-group">
-							<input type="text" name="symbol" placeholder="Search options by ticker" class="form-control"/>
+							<input type="text" name="symbol" placeholder="Ticker Search" class="form-control"/>
+							<button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
 						</div>
-						<button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
-					</div>
 				</form>
+					</div>
 					
 			</div>
 		</div>

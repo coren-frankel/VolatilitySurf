@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -69,8 +70,28 @@ public class MainController {
 	}
 		
 	@GetMapping("/options")
-	public String options(HttpSession session) {
+	public String options() {
 		//Render Stock Data w/ List of options
+		return "options.jsp";
+	}
+	@GetMapping("/volsurf")//rendering current "surface" here with default AAPL
+	public String showVolSurf() {
+		
+//		Stock ticker = stockServ.getStockBySymbol("AAPL");
+//		model.addAttribute("ticker", ticker);
+		return "volsurf.jsp";
+	}
+	@GetMapping("/test")//Rendering New possibilities here with default AAPL
+	public String volSurfTest(Model model) {//Volsurf testing
+		Stock testTicker = stockServ.getStockBySymbol("AAPL");
+		model.addAttribute("ticker", testTicker);
+//		model.setAttribute('plotData',plot);
+		return "test.jsp";
+	}
+	@GetMapping("/test/options")//with default AAPL options
+	public String optTest(Model model) {
+		Stock testTicker = stockServ.getStockBySymbol("AAPL");
+		model.addAttribute("ticker", testTicker);
 		return "options.jsp";
 	}
 }

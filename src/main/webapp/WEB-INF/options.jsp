@@ -17,30 +17,20 @@
 	<div class="d-flex justify-content-between align-items-center">
 		<h1><c:out value="${ticker.getShortName()}"/> (<c:out value="${ticker.getSymbol()}"/>)</h1>
 		<div class="d-flex justify-content-between">
-			<a href="#" class="btn btn-sm btn-outline-dark me-3">Volatility Surface</a>
+			<!-- Testing ground for volsurf -->
+			<a href="/volsurf" class="btn btn-sm btn-outline-dark me-3">Volatility Surface</a>
 			<a href="/" class="btn btn-sm btn-outline-dark">Home</a>
 		</div>
 	</div>
 	<br>
-	<h3><!-- Do we want the currency symbol? Realized Yahoo doesn't have it. -->
-		<c:set var="currency" value="${ticker.getCurrency()}"/>
-		<c:choose>
-			<c:when test="${currency == 'USD'}">$</c:when>
-			<c:when test="${currency == 'GBP'}">£</c:when>
-			<c:when test="${currency == 'EUR'}">€</c:when>
-			<c:otherwise>$<c:out value="${currency}"/></c:otherwise>
-		</c:choose>
+	<h3>
 		<fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${ticker.getRegularMarketPrice()}"/> 
 		<c:if test="${ticker.getRegularMarketChangePercent() > 0}"><span class="text-success fs-5">+<fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${ticker.getRegularMarketChange()}"/> (+</c:if>
 		<c:if test="${ticker.getRegularMarketChangePercent() < 0}"><span class="text-danger fs-5"><fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${ticker.getRegularMarketChange()}"/> (</c:if>
 		<fmt:formatNumber type="PERCENT" maxFractionDigits="2" minFractionDigits="2" value="${ticker.getRegularMarketChangePercent()/100}"/>)</span>
 	</h3>
-	
-	<fmt:timeZone value="US/Eastern"><!-- Hard Coding the timezone for NY Stock exchange -->
+	<fmt:timeZone value="US/Eastern"><!-- Hard Coding the timeZone for NY Stock exchange; does not accept EDT -->
 	<jsp:useBean id="now" class="java.util.Date"/>
-	<%-- <fmt:formatDate var="now" value="${currentDateTime}" pattern="hh:mma z" timeZone="US/Eastern"/> --%>
-	<%-- <c:set var="regMarkTime" value="${ticker.getRegularMarketTime()}"/> --%>
-	<%-- <c:set var="lastTime" value="<fmt:formatDate pattern="hh:mma z" timeZone="US/Eastern" value="${regMarkTime}"/>"/> --%>
 	<c:choose>
 		<c:when test="${now le ticker.getRegularMarketTime()}">
 			<span>As of <fmt:formatDate pattern="hh:mma z" timeZone="US/Eastern" value="${ticker.getRegularMarketTime()}"/> Market Open</span>
