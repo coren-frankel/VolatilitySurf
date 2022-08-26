@@ -37,9 +37,7 @@ public class MainController {
 			throws UnsupportedEncodingException {
 		if(symbol.length() > 4 || symbol.trim().length() < 2) {
 			return "redirect:/";
-		}
-		symbol = symbol.toUpperCase();
-		
+		}		
 		JSONObject result = stockServ.fetchStockData(symbol);
 		
 		if(result == null) {

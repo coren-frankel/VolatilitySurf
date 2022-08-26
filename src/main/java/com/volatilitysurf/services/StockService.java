@@ -22,6 +22,7 @@ public class StockService {
 	private StockRepository stockRepo;
 	
 	public Stock getStockBySymbol(String symbol) {
+		symbol = symbol.toUpperCase();
 		Optional<Stock> stock = stockRepo.findBySymbol(symbol);
 		if(stock.isPresent()) {
 			return stock.get();
