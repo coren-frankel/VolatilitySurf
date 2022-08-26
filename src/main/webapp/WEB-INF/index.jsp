@@ -23,8 +23,7 @@
 						<button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
 					</div>
 				</form>
-			
-			
+					
 			</div>
 		</div>
 	</div>
