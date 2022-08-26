@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css">
 <script src="/webjars/jquery/jquery.min.js"></script>
 <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
-<title>Options Page</title>
+<title><c:out value="${ticker.getShortName()}"/> Stock Options</title>
 </head>
 <body class="m-4">
 	<div class="d-flex justify-content-between align-items-center">
@@ -38,14 +38,15 @@
 	
 	<fmt:timeZone value="US/Eastern"><!-- Hard Coding the timezone for NY Stock exchange -->
 	<jsp:useBean id="now" class="java.util.Date"/>
-	<%-- <c:set var="" value="${now}"/> --%>
-	
-	<%-- <c:choose>
-		<c:when test="${}"> --%>
-			<span>As of <fmt:formatDate type="Time" timeStyle="long" timeZone="US/Eastern" value="${ticker.getRegularMarketTime()}"/> Market Open</span>
-		<%-- </c:when>
-		<c:otherwise><span>Closing price <fmt:formatDate type="Date" dateStyle="medium" value="${ticker.getRegularMarketTime()}"/></span></c:otherwise>
-	</c:choose> --%>
+	<%-- <fmt:formatDate var="now" value="${currentDateTime}" pattern="hh:mma z" timeZone="US/Eastern"/> --%>
+	<%-- <c:set var="regMarkTime" value="${ticker.getRegularMarketTime()}"/> --%>
+	<%-- <c:set var="lastTime" value="<fmt:formatDate pattern="hh:mma z" timeZone="US/Eastern" value="${regMarkTime}"/>"/> --%>
+	<c:choose>
+		<c:when test="${now le ticker.getRegularMarketTime()}">
+			<span>As of <fmt:formatDate pattern="hh:mma z" timeZone="US/Eastern" value="${ticker.getRegularMarketTime()}"/> Market Open</span>
+		</c:when>
+		<c:otherwise><span>At close: <fmt:formatDate pattern="hh:mma z" timeZone="US/Eastern" value="${ticker.getRegularMarketTime()}"/></span></c:otherwise>
+	</c:choose>
 	</fmt:timeZone>
 	<table class="table table-striped table-secondary text-center" style="font-size:60%;">
 		<thead>
@@ -67,7 +68,7 @@
 			<c:forEach var="option" items="${ticker.getOptions()}">
 			<tr>
 				<td><c:out value="${option.getContractSymbol()}"/></td>
-				<td><fmt:formatDate type="both" dateStyle="SHORT"  timeStyle="long" timeZone="US/Eastern" value="${option.getLastTradeDate()}"/></td>
+				<td><fmt:formatDate pattern="yyyy-MM-dd h:mma z" timeZone="US/Eastern" value="${option.getLastTradeDate()}"/></td>
 				<td><fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${option.getStrike()}"/></td>
 				<td><fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${option.getLastPrice()}"/></td>
 				<td><fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${option.getBid()}"/></td>
