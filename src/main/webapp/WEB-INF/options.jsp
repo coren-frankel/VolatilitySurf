@@ -15,27 +15,26 @@
 </head>
 <body class="m-4">
 	<div class="d-flex justify-content-between align-items-center">
-		<h1><c:out value="${ticker.getShortName()}"/> (<c:out value="${ticker.getSymbol()}"/>)</h1>
+		<h3><c:out value="${ticker.getShortName()}"/> (<c:out value="${ticker.getSymbol()}"/>)</h3>
 		<div class="d-flex justify-content-between">
-			<!-- Testing ground for volsurf -->
 			<a href="/volsurf" class="btn btn-sm btn-outline-dark me-3">Volatility Surface</a>
 			<a href="/" class="btn btn-sm btn-outline-dark">Home</a>
 		</div>
 	</div>
-	<br>
-	<h3>
+	<small class="text-secondary"><c:out value="${ticker.getFullExchangeName()}"/> - <c:out value="${ticker.getFullExchangeName()}"/> Real Time Price. Currently in <c:out value="${ticker.getCurrency()}"/></small>
+	<h1 class="mb-1"><!-- Do we want the currency symbol? Realized Yahoo doesn't have it. -->
 		<fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${ticker.getRegularMarketPrice()}"/> 
 		<c:if test="${ticker.getRegularMarketChangePercent() > 0}"><span class="text-success fs-5">+<fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${ticker.getRegularMarketChange()}"/> (+</c:if>
 		<c:if test="${ticker.getRegularMarketChangePercent() < 0}"><span class="text-danger fs-5"><fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${ticker.getRegularMarketChange()}"/> (</c:if>
 		<fmt:formatNumber type="PERCENT" maxFractionDigits="2" minFractionDigits="2" value="${ticker.getRegularMarketChangePercent()/100}"/>)</span>
-	</h3>
-	<fmt:timeZone value="US/Eastern"><!-- Hard Coding the timeZone for NY Stock exchange; does not accept EDT -->
+	</h1>
+	<fmt:timeZone value="US/Eastern"><!-- Hard Coding the timezone for NY Stock exchange -->
 	<jsp:useBean id="now" class="java.util.Date"/>
 	<c:choose>
 		<c:when test="${now le ticker.getRegularMarketTime()}">
-			<span>As of <fmt:formatDate pattern="hh:mma z" timeZone="US/Eastern" value="${ticker.getRegularMarketTime()}"/> Market Open</span>
+			<small>As of <fmt:formatDate pattern="hh:mma z" timeZone="US/Eastern" value="${ticker.getRegularMarketTime()}"/> Market Open</small>
 		</c:when>
-		<c:otherwise><span>At close: <fmt:formatDate pattern="hh:mma z" timeZone="US/Eastern" value="${ticker.getRegularMarketTime()}"/></span></c:otherwise>
+		<c:otherwise><small class="text-secondary">At close: <fmt:formatDate pattern="hh:mma z" timeZone="US/Eastern" value="${ticker.getRegularMarketTime()}"/></small></c:otherwise>
 	</c:choose>
 	</fmt:timeZone>
 	<table class="table table-striped table-secondary text-center" style="font-size:60%;">

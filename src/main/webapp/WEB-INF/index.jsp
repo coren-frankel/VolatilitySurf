@@ -15,7 +15,7 @@
 			<div class="col-4 mx-auto">
 
 				<h1>VolatilitySurf</h1>
-					<div class="d-flex row">
+					<div class="d-flex">
 				<form action="/fetch" method="POST">
 						<div class="input-group">
 							<input type="text" name="symbol" placeholder="Ticker Search" class="form-control"/>

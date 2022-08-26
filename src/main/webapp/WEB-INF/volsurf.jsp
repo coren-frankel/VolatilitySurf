@@ -26,13 +26,6 @@
 	</div>
 	<small class="text-secondary"><c:out value="${ticker.getFullExchangeName()}"/> - <c:out value="${ticker.getFullExchangeName()}"/> Real Time Price. Currently in <c:out value="${ticker.getCurrency()}"/></small>
 	<h1 class="mb-1"><!-- Do we want the currency symbol? Realized Yahoo doesn't have it. -->
-		<!-- <%-- <c:set var="currency" value="${ticker.getCurrency()}"/>
-		<c:choose>
-			<c:when test="${currency == 'USD'}">$</c:when>
-			<c:when test="${currency == 'GBP'}">£</c:when>
-			<c:when test="${currency == 'EUR'}">€</c:when>
-			<c:otherwise>$<c:out value="${currency}"/></c:otherwise>
-		</c:choose> --%> -->
 		<fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${ticker.getRegularMarketPrice()}"/> 
 		<c:if test="${ticker.getRegularMarketChangePercent() > 0}"><span class="text-success fs-5">+<fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${ticker.getRegularMarketChange()}"/> (+</c:if>
 		<c:if test="${ticker.getRegularMarketChangePercent() < 0}"><span class="text-danger fs-5"><fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${ticker.getRegularMarketChange()}"/> (</c:if>
