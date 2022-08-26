@@ -38,11 +38,18 @@ public class MainController {
 		if(symbol.length() > 4 || symbol.trim().length() < 2) {
 			return "redirect:/";
 		}
+		symbol = symbol.toUpperCase();
+		
 		JSONObject result = stockServ.fetchStockData(symbol);
 		
 		if(result == null) {
 			return "redirect:/";
 		}
+		Stock existingStock = stockServ.getStockBySymbol(symbol);
+		if(existingStock != null) {
+			stockServ.deleteStock(existingStock);			
+		}
+		
 		JSONArray expirationDates = result.getJSONArray("expirationDates");
 		JSONObject quote = result.getJSONObject("quote");
 		JSONObject options = result.getJSONArray("options").getJSONObject(0);
