@@ -2,17 +2,17 @@ package com.volatilitysurf.services;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
-
 import java.sql.Timestamp;
+import java.util.Optional;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import com.volatilitysurf.models.Stock;
 import com.volatilitysurf.repositories.StockRepository;
 
@@ -21,6 +21,19 @@ public class StockService {
 	@Autowired
 	private StockRepository stockRepo;
 	
+	public Stock getStockBySymbol(String symbol) {
+		symbol = symbol.toUpperCase();
+		Optional<Stock> stock = stockRepo.findBySymbol(symbol);
+		if(stock.isPresent()) {
+			return stock.get();
+		} else {
+			return null;
+		}
+	}
+	public void deleteStock(Stock stock) {
+		stockRepo.delete(stock);
+	}
+		
 	public JSONObject fetchStockData(String symbol) 
 			throws UnsupportedEncodingException{
 		symbol = symbol.toUpperCase();
@@ -100,8 +113,5 @@ public class StockService {
 		Stock newStock = stockRepo.save(stock);
 		return newStock;
 	}
-	
-	public Stock updateStock(Stock stock) {
-		return stockRepo.save(stock);
-	}
+
 }

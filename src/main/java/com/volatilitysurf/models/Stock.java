@@ -3,6 +3,7 @@ package com.volatilitysurf.models;
 import java.sql.Timestamp;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -37,7 +38,7 @@ public class Stock {
 	private Timestamp regularMarketTime;
 	private String exchangeTimezoneShortName;
 	
-	@OneToMany(mappedBy="stock", fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="stock", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private List<Option> options;
 	
 	public Stock() {}
