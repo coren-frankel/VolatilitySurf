@@ -43,17 +43,15 @@ public class MainController {
 		if(result == null) {
 			return "redirect:/";
 		}
-		
 		JSONArray expirationDates = result.getJSONArray("expirationDates");
-		
 		JSONObject quote = result.getJSONObject("quote");
+		JSONObject options = result.getJSONArray("options").getJSONObject(0);
+		
 		Stock ticker = stockServ.addStock(quote);
 		
 		// fetchStockData returns options for the first available expirationDate
 		// therefore the loop below starts at i = 1
-		JSONObject options = result.getJSONArray("options").getJSONObject(0);
 		optionServ.saveOptions(ticker, options);
-		
 		for(int i = 1; i < expirationDates.length(); i++) {
 			Long expiry = expirationDates.getLong(i);
 			options = optionServ.fetchOptionData(ticker, expiry.toString());	
@@ -61,7 +59,6 @@ public class MainController {
 		}
 		
 		ticker.setOptions(optionServ.getOptionsByStock(ticker));
-
 		session.setAttribute("ticker", ticker);
 		return "redirect:/options";
 	}
