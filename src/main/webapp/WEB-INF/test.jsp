@@ -13,19 +13,26 @@
 <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 <script src='https://cdn.plot.ly/plotly-2.14.0.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js'></script>
-<script src="/js/script.js" defer></script>
+<script src="/js/test.js" defer></script>
 <title><c:out value="${ticker.getSymbol()}"/>'s Volatility Surface</title>
 </head>
 <body class="m-4">
 	<div class="d-flex justify-content-between align-items-center">
 		<h3><c:out value="${ticker.getShortName()}"/> (<c:out value="${ticker.getSymbol()}"/>)</h3>
 		<div class="d-flex justify-content-between">
-			<a href="/options" class="btn btn-sm btn-outline-dark me-3">Back to Options</a>
+			<a href="/test/options" class="btn btn-sm btn-outline-dark me-3">Back to Options</a>
 			<a href="/" class="btn btn-sm btn-outline-dark">Home</a>
 		</div>
 	</div>
 	<small class="text-secondary"><c:out value="${ticker.getFullExchangeName()}"/> - <c:out value="${ticker.getFullExchangeName()}"/> Real Time Price. Currently in <c:out value="${ticker.getCurrency()}"/></small>
 	<h1 class="mb-1"><!-- Do we want the currency symbol? Realized Yahoo doesn't have it. -->
+		<!-- <%-- <c:set var="currency" value="${ticker.getCurrency()}"/>
+		<c:choose>
+			<c:when test="${currency == 'USD'}">$</c:when>
+			<c:when test="${currency == 'GBP'}">£</c:when>
+			<c:when test="${currency == 'EUR'}">€</c:when>
+			<c:otherwise>$<c:out value="${currency}"/></c:otherwise>
+		</c:choose> --%> -->
 		<fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${ticker.getRegularMarketPrice()}"/> 
 		<c:if test="${ticker.getRegularMarketChangePercent() > 0}"><span class="text-success fs-5">+<fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${ticker.getRegularMarketChange()}"/> (+</c:if>
 		<c:if test="${ticker.getRegularMarketChangePercent() < 0}"><span class="text-danger fs-5"><fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${ticker.getRegularMarketChange()}"/> (</c:if>
@@ -43,4 +50,5 @@
 	<div id="myDiv" class="d-flex justify-content-center"></div>
 </body>
 </html>
+	
 	

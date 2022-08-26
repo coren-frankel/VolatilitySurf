@@ -18,8 +18,8 @@ d3.csv('https://raw.githubusercontent.com/plotly/datasets/master/api_docs/mt_bru
     var layout = {
         title: 'Volatility Surf',
         autosize: false,
-        width: 800,
-        height: 800,
+        width: 550,
+        height: 550,
         margin: {
             l: 65,
             r: 50,
