@@ -30,11 +30,17 @@
 	</h1>
 	<fmt:timeZone value="US/Eastern"><!-- Hard Coding the timezone for NY Stock exchange -->
 	<jsp:useBean id="now" class="java.util.Date"/>
+	<c:set var="marketTime" value="${ticker.getRegularMarketTime()}"/>
+	<fmt:formatDate var="td" value="${now}" pattern="E"/><!-- today variable to compare -->
+	<fmt:formatDate var="mtd" value="${marketTime}" pattern="E"/><!-- marketTime day to compare -->
+	<c:out value="${ marketTime gt '09:30AM' && marketTime lt '04:00PM' && td == mtd }"/>
 	<c:choose>
-		<c:when test="${now ge '09:30AM' && now le '04:00PM' }">
-			<small>As of <fmt:formatDate pattern="hh:mma z"  value="${ticker.getRegularMarketTime()}"/> Market Open</small>
+		<!-- Accounting for stock market holidays and weekends, render differently when market is open -->
+		<c:when test="${ marketTime gt '09:30AM' && marketTime lt '04:00PM' && td == mtd }">
+		<!-- last called market time is greater than 9:30am, less than 4pm & was today -->
+			<small>As of <fmt:formatDate pattern="hh:mma z"  value="${marketTime}"/> Market Open</small>
 		</c:when>
-		<c:otherwise><small class="text-secondary">At close: <fmt:formatDate pattern="MMMM d hh:mma z"  value="${ticker.getRegularMarketTime()}"/></small></c:otherwise>
+		<c:otherwise><small class="text-secondary">At close: <fmt:formatDate pattern="MMMM d hh:mma z"  value="${marketTime}"/></small></c:otherwise>
 	</c:choose>
 	<table class="table table-striped table-secondary text-end" style="font-size:60%;">
 		<thead>
