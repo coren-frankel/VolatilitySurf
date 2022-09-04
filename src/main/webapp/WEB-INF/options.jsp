@@ -31,16 +31,15 @@
 	<fmt:timeZone value="US/Eastern"><!-- Hard Coding the timezone for NY Stock exchange -->
 	<jsp:useBean id="now" class="java.util.Date"/>
 	<c:choose>
-		<c:when test="${now le ticker.getRegularMarketTime()}">
-			<small>As of <fmt:formatDate pattern="hh:mma z" timeZone="US/Eastern" value="${ticker.getRegularMarketTime()}"/> Market Open</small>
+		<c:when test="${now ge '09:30AM' && now le '04:00PM' }">
+			<small>As of <fmt:formatDate pattern="hh:mma z"  value="${ticker.getRegularMarketTime()}"/> Market Open</small>
 		</c:when>
-		<c:otherwise><small class="text-secondary">At close: <fmt:formatDate pattern="hh:mma z" timeZone="US/Eastern" value="${ticker.getRegularMarketTime()}"/></small></c:otherwise>
+		<c:otherwise><small class="text-secondary">At close: <fmt:formatDate pattern="MMMM d hh:mma z"  value="${ticker.getRegularMarketTime()}"/></small></c:otherwise>
 	</c:choose>
-	</fmt:timeZone>
-	<table class="table table-striped table-secondary text-center" style="font-size:60%;">
+	<table class="table table-striped table-secondary text-end" style="font-size:60%;">
 		<thead>
 			<tr style="font-size:85%;">
-				<th>Contract Name</th>
+				<th class="text-start">Contract Name</th>
 				<th>Last Trade Date</th>
 				<th>Strike</th>
 				<th>Last Price</th>
@@ -56,8 +55,8 @@
 		<tbody>
 			<c:forEach var="option" items="${ticker.getOptions()}">
 			<tr>
-				<td><c:out value="${option.getContractSymbol()}"/></td>
-				<td><fmt:formatDate pattern="yyyy-MM-dd h:mma z" timeZone="US/Eastern" value="${option.getLastTradeDate()}"/></td>
+				<td class="text-start"><c:out value="${option.getContractSymbol()}"/></td>
+				<td><fmt:formatDate pattern="yyyy-MM-dd h:mma z"  value="${option.getLastTradeDate()}"/></td>
 				<td><fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${option.getStrike()}"/></td>
 				<td><fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${option.getLastPrice()}"/></td>
 				<td><fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${option.getBid()}"/></td>
@@ -83,5 +82,6 @@
 			</c:forEach>
 		</tbody>
 	</table>
+	</fmt:timeZone>
 </body>
 </html>
