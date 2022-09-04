@@ -9,6 +9,7 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.mashape.unirest.http.HttpResponse;
@@ -25,6 +26,9 @@ public class OptionService {
 	@Autowired
 	OptionRepository optionRepo;
 	
+	@Value("${apiKey}")
+	private String apiKey;
+	
 	public List<Option> getOptionsByStock(Stock stock){
 		return optionRepo.findByStock(stock);
 	}
@@ -34,7 +38,7 @@ public class OptionService {
 		String host = "https://mboum-finance.p.rapidapi.com/op/option";
 		String charset = "UTF-8";
 		String x_rapidapi_host = "mboum-finance.p.rapidapi.com";
-		String x_rapidapi_key = "ec2d471e81mshd1d781daa45de8ap15487djsn98d072fb2757";
+		String x_rapidapi_key = apiKey;
 		String query = String.format("expiration=%s&symbol=%s", URLEncoder.encode(expiry, charset),URLEncoder.encode(stock.getSymbol(), charset));
 		String url = host + "?" + query;
 		

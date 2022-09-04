@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.mashape.unirest.http.HttpResponse;
@@ -20,6 +21,9 @@ import com.volatilitysurf.repositories.StockRepository;
 public class StockService {
 	@Autowired
 	private StockRepository stockRepo;
+	
+	@Value("${apiKey}")
+	private String apiKey;
 	
 	public Stock getStockBySymbol(String symbol) {
 		symbol = symbol.toUpperCase();
@@ -41,7 +45,7 @@ public class StockService {
 		String host = "https://mboum-finance.p.rapidapi.com/op/option";
 		String charset = "UTF-8";
 		String x_rapidapi_host = "mboum-finance.p.rapidapi.com";
-		String x_rapidapi_key = "ec2d471e81mshd1d781daa45de8ap15487djsn98d072fb2757";
+		String x_rapidapi_key = apiKey;
 		String query = String.format("symbol=%s", URLEncoder.encode(symbol, charset));
 		String url = host + "?" + query;
 		
