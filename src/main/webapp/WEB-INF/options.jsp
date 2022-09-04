@@ -33,15 +33,22 @@
 	<c:set var="marketTime" value="${ticker.getRegularMarketTime()}"/>
 	<fmt:formatDate var="td" value="${now}" pattern="E"/><!-- today variable to compare -->
 	<fmt:formatDate var="mtd" value="${marketTime}" pattern="E"/><!-- marketTime day to compare -->
-	<c:out value="${ marketTime gt '09:30AM' && marketTime lt '04:00PM' && td == mtd }"/>
-	<c:choose>
 		<!-- Accounting for stock market holidays and weekends, render differently when market is open -->
+	<c:choose>
 		<c:when test="${ marketTime gt '09:30AM' && marketTime lt '04:00PM' && td == mtd }">
 		<!-- last called market time is greater than 9:30am, less than 4pm & was today -->
 			<small>As of <fmt:formatDate pattern="hh:mma z"  value="${marketTime}"/> Market Open</small>
 		</c:when>
 		<c:otherwise><small class="text-secondary">At close: <fmt:formatDate pattern="MMMM d hh:mma z"  value="${marketTime}"/></small></c:otherwise>
-	</c:choose>
+	</c:choose><br>
+	<!-- Build out select drop down for options by expiry; Possible "straddle" toggle like yahoo finance? -->
+	<div class="d-flex lh-1 my-2">
+		<select class="">
+			<option value="">Sample Date</option>
+			<option value=""></option>
+		</select>
+		<div class="d-inline p-2 rounded-1 ms-2" style="background-color:#CFE1FF;">In The Money</div>
+	</div>
 	<table class="table table-striped table-secondary text-end" style="font-size:60%;">
 		<thead>
 			<tr style="font-size:85%;">
@@ -59,32 +66,41 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="option" items="${ticker.getOptions()}">
-			<tr>
-				<td class="text-start"><c:out value="${option.getContractSymbol()}"/></td>
-				<td><fmt:formatDate pattern="yyyy-MM-dd h:mma z"  value="${option.getLastTradeDate()}"/></td>
-				<td><fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${option.getStrike()}"/></td>
-				<td><fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${option.getLastPrice()}"/></td>
-				<td><fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${option.getBid()}"/></td>
-				<td><fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${option.getAsk()}"/></td>
-				<c:choose>
-					<c:when test="${option.getAbsoluteChange() > 0}">
-						<td class="text-success">+<fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${option.getAbsoluteChange()}"/></td>
-						<td class="text-success">+<fmt:formatNumber type="PERCENT" maxFractionDigits="2" minFractionDigits="2" value="${option.getPercentChange()/100}"/></td>
-					</c:when>
-					<c:when test="${option.getAbsoluteChange() < 0}">
-						<td class="text-danger"><fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${option.getAbsoluteChange()}"/></td>
-						<td class="text-danger"><fmt:formatNumber type="PERCENT" maxFractionDigits="2" minFractionDigits="2" value="${option.getPercentChange()/100}"/></td>
-					</c:when>
-					<c:otherwise>
-						<td>0.00</td>
-						<td> - </td>
-					</c:otherwise>
-				</c:choose>
-				<td><c:out value="${option.getVolume()}"/></td>
-				<td><c:out value="${option.getOpenInterest()}"/></td>
-				<td><fmt:formatNumber type="PERCENT" maxFractionDigits="2" minFractionDigits="2" value="${option.getImpliedVolatility()}"/></td>
-			</tr>
+		<c:forEach var="option" items="${ticker.getOptions()}">
+		<c:choose>
+			<c:when test="${option.getInTheMoney()}">
+				<tr class="table-primary lh-1">
+			</c:when>
+			<c:otherwise>
+				<tr class=" lh-1">
+			</c:otherwise>
+		</c:choose>
+					<td class="text-start">
+						<c:out value="${option.getContractSymbol()}"/>
+					</td>
+					<td><fmt:formatDate pattern="yyyy-MM-dd h:mma z"  value="${option.getLastTradeDate()}"/></td>
+					<td><fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${option.getStrike()}"/></td>
+					<td><fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${option.getLastPrice()}"/></td>
+					<td><fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${option.getBid()}"/></td>
+					<td><fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${option.getAsk()}"/></td>
+					<c:choose>
+						<c:when test="${option.getAbsoluteChange() > 0}">
+							<td class="text-success">+<fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${option.getAbsoluteChange()}"/></td>
+							<td class="text-success">+<fmt:formatNumber type="PERCENT" maxFractionDigits="2" minFractionDigits="2" value="${option.getPercentChange()/100}"/></td>
+						</c:when>
+						<c:when test="${option.getAbsoluteChange() < 0}">
+							<td class="text-danger"><fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${option.getAbsoluteChange()}"/></td>
+							<td class="text-danger"><fmt:formatNumber type="PERCENT" maxFractionDigits="2" minFractionDigits="2" value="${option.getPercentChange()/100}"/></td>
+						</c:when>
+						<c:otherwise>
+							<td>0.00</td>
+							<td> - </td>
+						</c:otherwise>
+					</c:choose>
+					<td><c:out value="${option.getVolume()}"/></td>
+					<td><c:out value="${option.getOpenInterest()}"/></td>
+					<td><fmt:formatNumber type="PERCENT" maxFractionDigits="2" minFractionDigits="2" value="${option.getImpliedVolatility()}"/></td>
+				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
