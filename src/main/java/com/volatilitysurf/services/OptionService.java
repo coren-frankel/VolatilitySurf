@@ -9,7 +9,6 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.mashape.unirest.http.HttpResponse;
@@ -20,14 +19,19 @@ import com.volatilitysurf.models.Option;
 import com.volatilitysurf.models.Stock;
 import com.volatilitysurf.repositories.OptionRepository;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 @Service
 public class OptionService {
 	
 	@Autowired
 	OptionRepository optionRepo;
 	
-	@Value("${apiKey}")
-	private String apiKey;
+	//DOTENV-JAVA PACKAGE PERHAPS ONLY NECESSARY IN DEV ENVIRONMENT
+	Dotenv dotenv = Dotenv.configure()
+	        .ignoreIfMissing()
+	        .load();
+	private String apiKey = dotenv.get("MBOUM_KEY");
 	
 	public List<Option> getOptionsByStock(Stock stock){
 		return optionRepo.findByStock(stock);

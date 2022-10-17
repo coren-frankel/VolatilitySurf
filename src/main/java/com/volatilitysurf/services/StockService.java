@@ -7,7 +7,6 @@ import java.util.Optional;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.mashape.unirest.http.HttpResponse;
@@ -17,13 +16,18 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import com.volatilitysurf.models.Stock;
 import com.volatilitysurf.repositories.StockRepository;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 @Service
 public class StockService {
 	@Autowired
 	private StockRepository stockRepo;
 	
-	@Value("${apiKey}")
-	private String apiKey;
+	//DOTENV-JAVA PACKAGE PERHAPS ONLY NECESSARY IN DEV ENVIRONMENT
+	Dotenv dotenv = Dotenv.configure()
+	        .ignoreIfMissing()
+	        .load();
+	private String apiKey = dotenv.get("MBOUM_KEY");
 	
 	public Stock getStockBySymbol(String symbol) {
 		symbol = symbol.toUpperCase();
