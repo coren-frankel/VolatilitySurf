@@ -1,42 +1,47 @@
-d3.csv('https://raw.githubusercontent.com/plotly/datasets/master/api_docs/mt_bruno_elevation.csv', function (err, rows) {
-    function unpack(rows, key) {
-        return rows.map(function (row) {
-            return row[key];
-        });
+xdata = [2, 3, 4, 5, 3, 5];
+ydata = [2, 4, 8, 16, 7, 1];
+zdata = [1, 2, 1, 2, 2.5, 1.5];
+data = [{
+    type: 'scatter3d',
+    x: xdata,
+    y: ydata,
+    z: zdata,
+    mode: 'markers',
+    marker: { 
+        color: 'green',
+        size: 6
     }
-
-    var z_data = []
-    for (i = 0; i < 24; i++) {
-        z_data.push(unpack(rows, i));
-    }
-
-    var data = [{
-        z: z_data,
-        type: 'surface'
-    }];
-
-    var layout = {
-        title: 'Volatility Surf',
-        autosize: false,
-        width: 550,
-        height: 550,
-        margin: {
-            l: 65,
-            r: 50,
-            b: 65,
-            t: 90,
+}];
+layout = { 
+    title: "Implied Volatility AAPL",
+    scene:{
+        aspectratio: { x: 1, y: 1.2, z: 1 },
+        xaxis: {
+            title: "Moneyness",
+            nticks: 7,
+            range: [0, 6],
+            backgroundcolor: 'rgb(235, 235, 235)',
+            gridcolor: 'rgb(255, 255, 255)',
+            zerolinecolor: "rgb(255, 255, 255)",
+            showbackground: true
         },
-        scene: {
-            xaxis: {
-                title: "Moneyness"
-            },
-            yaxis: {
-                title: "Time to Maturity"
-            },
-            zaxis: {
-                title: "Implied Volatility"
-            }
-        }
-    }
-    Plotly.newPlot('myDiv', data, layout);
-});
+        yaxis: {
+            title: "Expiry",
+            nticks: 5,
+            range: [0, 20],
+            backgroundcolor: 'rgb(235, 235, 235)',
+            gridcolor: 'rgb(255, 255, 255)',
+            zerolinecolor: "rgb(255, 255, 255)",
+            showbackground: true
+        },
+        zaxis: {
+            title: "Volatility",
+            nticks: 7,
+            range: [0, 3],
+            backgroundcolor: 'rgb(235, 235, 235)',
+            gridcolor: 'rgb(255, 255, 255)',
+            zerolinecolor: "rgb(255, 255, 255)",
+            showbackground: true
+        }}
+};
+Plotly.newPlot(document.getElementById('plot'), data, layout);
