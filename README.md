@@ -66,7 +66,8 @@ Provide various use cases and code examples here.
 
 -->
 ## Project Status
-Project is: _in progress_ 🏗️
+Project is: 🏗️ _in progress_
+
 Active Contributors: 
   + [Erik van Erp](https://github.com/ErikvanErp) (Lead Full Stack Developer, UI/UX Designer)
   + [Coren Frankel](https://github.com/coren-frankel) (Full Stack Developer, DevOps)
