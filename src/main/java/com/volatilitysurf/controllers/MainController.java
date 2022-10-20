@@ -90,6 +90,9 @@ public class MainController {
 		} else {
 			Stock ticker = stockServ.getStockBySymbol(symbol);
 			model.addAttribute("ticker", ticker);
+			model.addAttribute("xdata", "[2, 3, 4, 5, 3, 5]");
+			model.addAttribute("ydata", "[2, 4, 8, 16, 7, 1]");
+			model.addAttribute("zdata", "[1, 2, 1, 2, 2.5, 1.5]");
 		}
 		return "volsurf.jsp";
 	}

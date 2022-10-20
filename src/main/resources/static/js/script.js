@@ -1,6 +1,3 @@
-xdata = [2, 3, 4, 5, 3, 5];
-ydata = [2, 4, 8, 16, 7, 1];
-zdata = [1, 2, 1, 2, 2.5, 1.5];
 data = [{
     type: 'scatter3d',
     x: xdata,
