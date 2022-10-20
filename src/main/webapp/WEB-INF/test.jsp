@@ -47,7 +47,7 @@
 		<c:otherwise><small class="text-secondary">At close: <fmt:formatDate pattern="hh:mma z" timeZone="US/Eastern" value="${ticker.getRegularMarketTime()}"/></small></c:otherwise>
 	</c:choose>
 	</fmt:timeZone>
-	<div id="myDiv" class="d-flex justify-content-center"></div>
+	<div id="plot" class="d-flex justify-content-center"></div>
 </body>
 </html>
 	

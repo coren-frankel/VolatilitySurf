@@ -9,11 +9,19 @@ data = [{
     mode: 'markers',
     marker: { 
         color: 'green',
-        size: 6
+        size: 3
     }
 }];
 layout = { 
-    title: "Implied Volatility AAPL",
+    title: "Implied Volatility Plot",
+    width: 600,
+	height: 600,
+    margin: {
+        l: 50,
+        r: 50,
+        b: 50,
+        t: 50,
+    },
     scene:{
         aspectratio: { x: 1, y: 1.2, z: 1 },
         xaxis: {
