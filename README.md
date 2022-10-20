@@ -41,15 +41,15 @@ As fellow students in full stack development, collaborators Erik van Erp, David 
 
 
 ## Features
-List the ready features here:
-- Minimalist Ticker form search
-- Real-time stock options data rendering in table format akin to Yahoo! Finance
-- More on the way!
+<!-- List the ready features here: -->
+- Minimalist Ticker home page with form search
+- Real-time stock options data conditionally rendered in table format akin to Yahoo! Finance
+- More on the way! (Rendered implied volatility surfaces coming soon)
 
 
 ## Screenshots
+<!-- If you have screenshots, gifs, video demos you'd like to share, include them here. -->
 ![Landing Page Screenshot](./img/landing.gif)
-<!-- If you have screenshots you'd like to share, include them here. -->
 
 <!--
 ## Setup
