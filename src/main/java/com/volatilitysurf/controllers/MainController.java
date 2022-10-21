@@ -1,6 +1,7 @@
 package com.volatilitysurf.controllers;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 
@@ -89,10 +90,14 @@ public class MainController {
 			return "redirect:/";
 		} else {
 			Stock ticker = stockServ.getStockBySymbol(symbol);
+			ArrayList<String> plotData = ticker.getPlotData();
+			System.out.println(plotData.get(0));
+			System.out.println(plotData.get(1));
+			System.out.println(plotData.get(2));
 			model.addAttribute("ticker", ticker);
-			model.addAttribute("xdata", "[2, 3, 4, 5, 3, 5]");
-			model.addAttribute("ydata", "[2, 4, 8, 16, 7, 1]");
-			model.addAttribute("zdata", "[1, 2, 1, 2, 2.5, 1.5]");
+			model.addAttribute("xdata", plotData.get(0));
+			model.addAttribute("ydata", plotData.get(1));
+			model.addAttribute("zdata", plotData.get(2));
 		}
 		return "volsurf.jsp";
 	}

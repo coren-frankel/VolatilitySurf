@@ -1,6 +1,7 @@
 package com.volatilitysurf.models;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -14,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import org.apache.commons.lang3.StringUtils;
 
 @Entity
 @Table(name="stocks")
@@ -43,6 +46,36 @@ public class Stock {
 	
 	public Stock() {}
 
+	// create 3 strings with x-y-z data for implied volatility scatter plot 
+	public ArrayList<String> getPlotData(){
+		ArrayList<String> plotData = new ArrayList<String>();
+		
+		if (this.options.size() == 0) {
+			plotData.add("[]");
+			plotData.add("[]");
+			plotData.add("[]");
+			return plotData;
+		}
+		String xdata = "[";
+		String ydata = "[";
+		String zdata = "[";
+		for(Option option: this.options) {
+			xdata = xdata +  ( (Double) (option.getStrike() / this.regularMarketPrice) ).toString() + ",";
+			ydata = ydata + option.getDaysToExpiration().toString() + ",";
+			zdata = zdata + ((Double) (option.getImpliedVolatility() * 100)).toString() + ",";
+		}		
+		xdata = xdata + "]";
+		ydata = ydata + "]";
+		zdata = zdata + "]";
+		
+		plotData.add(xdata);
+		plotData.add(ydata);
+		plotData.add(zdata);
+
+		return plotData;
+	}
+	
+	// getters/setters
 	public Long getId() {
 		return id;
 	}

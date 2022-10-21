@@ -13,12 +13,14 @@
 <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 <script src='https://cdn.plot.ly/plotly-2.14.0.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js'></script>
+
 <script>
 	xdata = ${xdata};
 	ydata = ${ydata};
 	zdata = ${zdata};
 </script>
 <script src="/js/script.js" defer></script>
+
 <title><c:out value="${ticker.getSymbol()}"/>'s Volatility Surface</title>
 </head>
 <body class="m-4">

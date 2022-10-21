@@ -23,8 +23,6 @@ layout = {
         aspectratio: { x: 1, y: 1.2, z: 1 },
         xaxis: {
             title: "Moneyness",
-            nticks: 7,
-            range: [0, 6],
             backgroundcolor: 'rgb(235, 235, 235)',
             gridcolor: 'rgb(255, 255, 255)',
             zerolinecolor: "rgb(255, 255, 255)",
@@ -32,8 +30,6 @@ layout = {
         },
         yaxis: {
             title: "Expiry",
-            nticks: 5,
-            range: [0, 20],
             backgroundcolor: 'rgb(235, 235, 235)',
             gridcolor: 'rgb(255, 255, 255)',
             zerolinecolor: "rgb(255, 255, 255)",
@@ -41,8 +37,6 @@ layout = {
         },
         zaxis: {
             title: "Volatility",
-            nticks: 7,
-            range: [0, 3],
             backgroundcolor: 'rgb(235, 235, 235)',
             gridcolor: 'rgb(255, 255, 255)',
             zerolinecolor: "rgb(255, 255, 255)",
