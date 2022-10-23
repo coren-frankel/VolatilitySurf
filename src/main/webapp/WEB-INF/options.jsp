@@ -43,10 +43,14 @@
 	</c:choose><br>
 	<!-- Build out select drop down for options by expiry; Possible "straddle" toggle like yahoo finance? -->
 	<div class="d-flex lh-1 my-2">
-		<select class="">
-			<option value="">Sample Date</option>
-			<option value=""></option>
+	<!-- ON CHANGE, RENDER LIST BY EXPIRY -->
+		<form action="/setOptionsExpiry" method="POST">
+		<select name="expiryDate" class="form-select" onchange="this.form.submit()">
+			<c:forEach var="expiry" items="${session.expirations}">
+				<option value="${expiry}">${expiry}</option>
+			</c:forEach>
 		</select>
+		</form>
 		<div class="d-inline p-2 rounded-1 ms-2" style="background-color:#CFE1FF;">In The Money</div>
 	</div>
 	<table class="table table-striped table-secondary text-end" style="font-size:60%;">
@@ -71,8 +75,9 @@
 			<c:when test="${option.getInTheMoney()}">
 				<tr class="table-primary lh-1">
 			</c:when>
+			<!-- WHEN IN THE MONEY, RENDER BLUE HIGHLIGHT -->
 			<c:otherwise>
-				<tr class=" lh-1">
+				<tr class="lh-1">
 			</c:otherwise>
 		</c:choose>
 					<td class="text-start">

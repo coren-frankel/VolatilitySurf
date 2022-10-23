@@ -2,6 +2,8 @@ package com.volatilitysurf.controllers;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.volatilitysurf.models.Option;
 import com.volatilitysurf.models.Stock;
 import com.volatilitysurf.services.OptionService;
 import com.volatilitysurf.services.StockService;
@@ -67,6 +70,7 @@ public class MainController {
 		
 		ticker.setOptions(optionServ.getOptionsByStock(ticker));
 		session.setAttribute("symbol",symbol);
+		session.setAttribute("expirations", expirationDates);
 		return "redirect:/options";
 	}
 		
@@ -74,14 +78,30 @@ public class MainController {
 	public String options(HttpSession session, Model model) {
 		//Render Stock Data w/ List of options
 		String symbol = (String)session.getAttribute("symbol");
+		List<Date> expirations = (List<Date>)session.getAttribute("expirations");
+		Date expiry = (Date)session.getAttribute("expiry");
 		if(symbol == null) {
 			return "redirect:/";
 		} else {
+			if(expiry == null) {//IF THE EXPIRY CHOICE HAS NOT BEEN MADE IN SESSION, 
+				session.setAttribute("expiry", expirations.get(0));
+			}//START WITH THE FIRST FROM THE ARRAYLIST
 			Stock ticker = stockServ.getStockBySymbol(symbol);
 			model.addAttribute("ticker", ticker);
+//			model.addAttribute("expirations", expirations);
+			List<Option> options = optionServ.getOptionsByExpiration(ticker, expiry); 
+			model.addAttribute("options", options);
 		}
 		return "options.jsp";
 	}
+	
+	@PostMapping("/setOptionsExpiry")
+	public String setExpiry(HttpSession session, 
+			@RequestParam("expiryDate") Date expiry) {
+		session.setAttribute("expiry", expiry);
+		return "redirect:/options";
+	}
+	
 	@GetMapping("/volsurf")//rendering current "surface" here with default AAPL
 	public String showVolSurf(HttpSession session, Model model) {
 		String symbol = (String)session.getAttribute("symbol");
