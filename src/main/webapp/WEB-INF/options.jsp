@@ -46,8 +46,15 @@
 	<!-- ON CHANGE, RENDER LIST BY EXPIRY -->
 		<form action="/setOptionsExpiry" method="POST">
 		<select name="expiryDate" class="form-select" onchange="this.form.submit()">
-			<c:forEach var="expiry" items="${session.expirations}">
-				<option value="${expiry}">${expiry}</option>
+			<c:forEach var="expiry" items="${expirations}">
+				<c:choose>
+					<c:when test="${selectedExpiry == expiry}">
+						<option value="${expiry}" selected><fmt:formatDate pattern="MMMM d, YYYY" timeZone="UTC" value="${expiry}"/></option>
+					</c:when>
+					<c:otherwise>
+						<option value="${expiry}"><fmt:formatDate pattern="MMMM d, YYYY" timeZone="UTC" value="${expiry}"/></option>
+					</c:otherwise>
+				</c:choose>
 			</c:forEach>
 		</select>
 		</form>
@@ -70,12 +77,12 @@
 			</tr>
 		</thead>
 		<tbody>
-		<c:forEach var="option" items="${ticker.getOptions()}">
+		<c:forEach var="option" items="${options}">
+			<!-- WHEN IN THE MONEY, RENDER BLUE HIGHLIGHT -->
 		<c:choose>
 			<c:when test="${option.getInTheMoney()}">
 				<tr class="table-primary lh-1">
 			</c:when>
-			<!-- WHEN IN THE MONEY, RENDER BLUE HIGHLIGHT -->
 			<c:otherwise>
 				<tr class="lh-1">
 			</c:otherwise>

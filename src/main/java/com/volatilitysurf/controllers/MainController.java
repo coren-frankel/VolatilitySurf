@@ -62,7 +62,14 @@ public class MainController {
 		// fetchStockData returns options for the first available expirationDate
 		// therefore the loop below starts at i = 1
 		optionServ.saveOptions(ticker, options);
+		ArrayList<Date> expiries = new ArrayList<Date>();//CREATE EXPIRATION LIST
 		for(int i = 1; i < expirationDates.length(); i++) {
+			if(i == 1) {//BEFORE ADDING TO EXPIRATION LIST
+				Date exp = stockServ.formatExpiration(expirationDates.getLong(0));
+				expiries.add(exp);
+			}//FORMAT & ADD FIRST DATE, SKIPPED FOR 2ND API REQUEST
+			expiries.add(stockServ.formatExpiration(expirationDates.getLong(i)));
+			//THEN FORMAT AND ADD EACH EXPIRY IN NATURAL ORDER
 			Long expiry = expirationDates.getLong(i);
 			options = optionServ.fetchOptionData(ticker, expiry.toString());	
 			optionServ.saveOptions(ticker, options);
@@ -70,7 +77,8 @@ public class MainController {
 		
 		ticker.setOptions(optionServ.getOptionsByStock(ticker));
 		session.setAttribute("symbol",symbol);
-		session.setAttribute("expirations", expirationDates);
+		
+		session.setAttribute("expiries", expiries);
 		return "redirect:/options";
 	}
 		
@@ -78,27 +86,29 @@ public class MainController {
 	public String options(HttpSession session, Model model) {
 		//Render Stock Data w/ List of options
 		String symbol = (String)session.getAttribute("symbol");
-		List<Date> expirations = (List<Date>)session.getAttribute("expirations");
-		Date expiry = (Date)session.getAttribute("expiry");
-		if(symbol == null) {
+		@SuppressWarnings("unchecked")
+		ArrayList<Date> expiries = (ArrayList<Date>) session.getAttribute("expiries");
+		Date expiry = (Date)session.getAttribute("selectedExpiry");
+		if(symbol == null || expiries == null) {
 			return "redirect:/";
-		} else {
-			if(expiry == null) {//IF THE EXPIRY CHOICE HAS NOT BEEN MADE IN SESSION, 
-				session.setAttribute("expiry", expirations.get(0));
-			}//START WITH THE FIRST FROM THE ARRAYLIST
-			Stock ticker = stockServ.getStockBySymbol(symbol);
-			model.addAttribute("ticker", ticker);
-//			model.addAttribute("expirations", expirations);
-			List<Option> options = optionServ.getOptionsByExpiration(ticker, expiry); 
-			model.addAttribute("options", options);
 		}
+		if(expiry == null) {//IF EXPIRY CHOICE NOT IN SESSION, 
+			session.setAttribute("selectedExpiry", expiries.get(0));
+			expiry = expiries.get(0);
+		}//START WITH THE FIRST FROM THE LIST
+		Stock ticker = stockServ.getStockBySymbol(symbol);
+		List<Option> options = optionServ.getOptionsByExpiration(ticker, expiry); 
+		model.addAttribute("ticker", ticker);
+		model.addAttribute("expirations", expiries);
+		model.addAttribute("options", options);
+		model.addAttribute("selectedExpiry", expiry);
 		return "options.jsp";
 	}
 	
 	@PostMapping("/setOptionsExpiry")
 	public String setExpiry(HttpSession session, 
 			@RequestParam("expiryDate") Date expiry) {
-		session.setAttribute("expiry", expiry);
+		session.setAttribute("selectedExpiry", expiry);
 		return "redirect:/options";
 	}
 	
