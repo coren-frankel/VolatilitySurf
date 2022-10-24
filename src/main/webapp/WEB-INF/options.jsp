@@ -11,6 +11,15 @@
 <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css">
 <script src="/webjars/jquery/jquery.min.js"></script>
 <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="css/styles.css" type="text/css">
+
+
+<link href="https://unpkg.com/bootstrap-table@1.21.0/dist/bootstrap-table.min.css" rel="stylesheet">
+<link href="https://unpkg.com/bootstrap-table@1.21.0/dist/extensions/sticky-header/bootstrap-table-sticky-header.css" rel="stylesheet">
+<!-- BOOTSTRAP DEPENDENCIES FOR TABLE EFFECTS -->
+<script src="https://unpkg.com/bootstrap-table@1.21.0/dist/bootstrap-table.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.21.0/dist/extensions/sticky-header/bootstrap-table-sticky-header.min.js"></script>
+
 <title><c:out value="${ticker.getShortName()}"/> Stock Options</title>
 </head>
 <body class="m-4">
@@ -60,6 +69,7 @@
 		</form>
 		<div class="d-inline p-2 rounded-1 ms-2" style="background-color:#CFE1FF;">In The Money</div>
 	</div>
+		<div class="table-wrapper-scroll-y my-custom-scrollbar">
 	<table class="table table-striped table-secondary text-end" style="font-size:60%;">
 		<thead>
 			<tr style="font-size:85%;">
@@ -116,6 +126,7 @@
 			</c:forEach>
 		</tbody>
 	</table>
+			</div>
 	</fmt:timeZone>
 </body>
 </html>
