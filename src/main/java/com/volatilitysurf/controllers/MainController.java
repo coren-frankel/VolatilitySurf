@@ -40,9 +40,12 @@ public class MainController {
 			@RequestParam("symbol") String symbol,
 			HttpSession session) 
 			throws UnsupportedEncodingException {
-		if(symbol.length() > 4 || symbol.trim().length() < 2) {
+		if(symbol.trim().length() > 4 || symbol.trim().length() < 2) {
 			return "redirect:/";
-		}		
+		}//THESE VALIDATIONS SHOULD BE BEEFED UP
+		//TODO: 
+		//	-BEEF IT UP
+		//	-INCORPORATE FLASH MESSAGES?
 		JSONObject result = stockServ.fetchStockData(symbol);
 		
 		if(result == null) {
@@ -131,12 +134,18 @@ public class MainController {
 		}
 		return "volsurf.jsp";
 	}
-	@GetMapping("/test")//Rendering New possibilities here with default AAPL
+	@GetMapping("/test")//offline-friendly testing if AAPL in DB
 	public String volSurfTest(Model model) {//Volsurf testing
 		Stock testTicker = stockServ.getStockBySymbol("AAPL");
+		ArrayList<String> plotData = testTicker.getPlotData();
+		System.out.println(plotData.get(0));
+		System.out.println(plotData.get(1));
+		System.out.println(plotData.get(2));
 		model.addAttribute("ticker", testTicker);
-//		model.setAttribute('plotData',plot);
-		return "test.jsp";
+		model.addAttribute("xdata", plotData.get(0));
+		model.addAttribute("ydata", plotData.get(1));
+		model.addAttribute("zdata", plotData.get(2));
+		return "volsurf.jsp";
 	}
 	@GetMapping("/test/options")//with default AAPL options
 	public String optTest(Model model) {
