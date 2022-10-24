@@ -6,12 +6,13 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="/webjars/jquery/jquery.min.js"></script>
 <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+<script src="/js/pend.js" defer></script>
 <meta charset="UTF-8">
 <title>VolatilitySurf</title>
 </head>
 <body>
 	<div class="container">
-		<div class="row mt-5">
+		<div class="row my-5">
 			<div class="col col-5 mx-auto">
 
 				<h1 class="text-center">VolatilitySurf</h1>
@@ -19,7 +20,7 @@
 				<form action="/fetch" method="POST">
 						<div class="input-group">
 							<input type="text" name="symbol" placeholder="Ticker Search" class="form-control"/>
-							<button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+							<button type="submit" onClick="search()" id="search" class="btn btn-primary"><i class="fa fa-search"></i></button>
 						</div>
 				</form>
 					</div>
@@ -27,6 +28,6 @@
 			</div>
 		</div>
 	</div>
-
+	<div id="loadingBar"></div>
 </body>
 </html>
