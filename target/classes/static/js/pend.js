@@ -14,7 +14,7 @@ function search(){
 				<div class="progress-bar progress-bar-striped 
 				progress-bar-animated bg-info" role="progressbar" 
 				style="width: ${current}%">
-					${current < 50 ? "Fetching real-time stock option data..." : "Tide is rising! Almost there..."}
+					${current < 50 ? "Fetching Real-Time Stock Option Data..." : "<>The <em>Data-Tide</em> Is Coming In! Almost There...</>"}
 				</div>
 			</div>`;
     				
@@ -31,7 +31,7 @@ function search(){
 				<div class="progress-bar progress-bar-striped
 				progress-bar-animated bg-primary" role="progressbar" 
 				style="width: 99%;">
-				This is a big one! The surf is nearly up! 🌊
+				We're almost done pooling the data! This one should make a splash... 🌊
 				</div>
 			</div>`;
 	})();		
