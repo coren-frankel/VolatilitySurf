@@ -14,13 +14,13 @@ function search(){
 				<div class="progress-bar progress-bar-striped 
 				progress-bar-animated bg-info" role="progressbar" 
 				style="width: ${current}%">
-					${current < 50 ? "Fetching Real-Time Stock Option Data..." : "<>The <em>Data-Tide</em> Is Coming In! Almost There...</>"}
+					${current < 45 ? "Fetching Real-Time Stock Option Data..." : "The Data-Tide Is Coming In..."}
 				</div>
 			</div>`;
     				
-	}//UPDATES BOOTSTRAP PROGRESS BAR INCLUDING TERNARY TXT MSG
+	}//BOOTSTRAP PROGRESS BAR INCLUDING TERNARY TXT MSG
 	
-	(async() => {
+	(async() => {//100 "TASKS" PROMISED FOR SIMULATED PROGRESS
 		let current = 1;
 		const promises = new Array(100)
 	    	.fill(0)
