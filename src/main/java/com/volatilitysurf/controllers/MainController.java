@@ -123,21 +123,23 @@ public class MainController {
 			return "redirect:/";
 		} else {
 			Stock ticker = stockServ.getStockBySymbol(symbol);
-			ArrayList<String> plotData = ticker.getPlotData();
-			System.out.println(plotData.get(0));
-			System.out.println(plotData.get(1));
-			System.out.println(plotData.get(2));
+			ArrayList<String> plotDataC = ticker.getPlotData('C');
+			ArrayList<String> plotDataP = ticker.getPlotData('P');
+			
 			model.addAttribute("ticker", ticker);
-			model.addAttribute("xdata", plotData.get(0));
-			model.addAttribute("ydata", plotData.get(1));
-			model.addAttribute("zdata", plotData.get(2));
+			model.addAttribute("xdatacall", plotDataC.get(0));
+			model.addAttribute("ydatacall", plotDataC.get(1));
+			model.addAttribute("zdatacall", plotDataC.get(2));
+			model.addAttribute("xdataput", plotDataP.get(0));
+			model.addAttribute("ydataput", plotDataP.get(1));
+			model.addAttribute("zdataput", plotDataP.get(2));
 		}
 		return "volsurf.jsp";
 	}
 	@GetMapping("/test")//offline-friendly testing if AAPL in DB
 	public String volSurfTest(Model model) {//Volsurf testing
 		Stock testTicker = stockServ.getStockBySymbol("AAPL");
-		ArrayList<String> plotData = testTicker.getPlotData();
+		ArrayList<String> plotData = testTicker.getPlotData('P');
 		System.out.println(plotData.get(0));
 		System.out.println(plotData.get(1));
 		System.out.println(plotData.get(2));

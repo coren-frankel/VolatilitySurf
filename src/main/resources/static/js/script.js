@@ -1,13 +1,26 @@
 data = [{
     type: 'scatter3d',
-    x: xdata,
-    y: ydata,
-    z: zdata,
+    x: xdatacall,
+    y: ydatacall,
+    z: zdatacall,
     mode: 'markers',
     marker: { 
         color: 'green',
-        size: 3
-    }
+        size: 2
+    },
+    name: "Calls"
+},
+{
+    type: 'scatter3d',
+    x: xdataput,
+    y: ydataput,
+    z: zdataput,
+    mode: 'markers',
+    marker: { 
+        color: 'orange',
+        size: 2
+    },
+    name: "Puts"
 }];
 layout = { 
     title: "Implied Volatility Plot",

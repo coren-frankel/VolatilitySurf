@@ -47,7 +47,7 @@ public class Stock {
 	public Stock() {}
 
 	// create 3 strings with x-y-z data for implied volatility scatter plot 
-	public ArrayList<String> getPlotData(){
+	public ArrayList<String> getPlotData(char type){
 		ArrayList<String> plotData = new ArrayList<String>();
 		
 		if (this.options.size() == 0) {
@@ -60,9 +60,14 @@ public class Stock {
 		String ydata = "[";
 		String zdata = "[";
 		for(Option option: this.options) {
-			xdata = xdata +  ( (Double) (option.getStrike() / this.regularMarketPrice) ).toString() + ",";
-			ydata = ydata + option.getDaysToExpiration().toString() + ",";
-			zdata = zdata + ((Double) (option.getImpliedVolatility() * 100)).toString() + ",";
+			Double moneyness = (Double) (option.getStrike() / this.regularMarketPrice);
+			Integer expiry = option.getDaysToExpiration();
+			String optionType = option.getOptionType(); 
+			if (optionType.charAt(0) == type && moneyness > 0.7 && moneyness < 1.4 && expiry > 4) {
+				xdata = xdata +  moneyness.toString() + ",";
+				ydata = ydata + expiry.toString() + ",";
+				zdata = zdata + ((Double) (option.getImpliedVolatility() * 100)).toString() + ",";				
+			}
 		}		
 		xdata = xdata + "]";
 		ydata = ydata + "]";

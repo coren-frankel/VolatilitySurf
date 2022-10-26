@@ -15,9 +15,12 @@
 <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js'></script>
 
 <script>
-	xdata = ${xdata};
-	ydata = ${ydata};
-	zdata = ${zdata};
+	xdatacall = ${xdatacall};
+	ydatacall = ${ydatacall};
+	zdatacall = ${zdatacall};
+	xdataput = ${xdataput};
+	ydataput = ${ydataput};
+	zdataput = ${zdataput};
 </script>
 <script src="/js/script.js" defer></script>
 
