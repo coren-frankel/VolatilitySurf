@@ -44,11 +44,15 @@ public class Option {
 	
 	public Option() {}
 
-	// This function should return number of trading days until expiration
-	// Currently it returns number of calendar days until expiration
+	// number of calendar days until expiration
 	public Integer getDaysToExpiration() {
 		Date now = new Date();
 		return (int) ((expiration.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+	}
+	
+	public Integer getDaysSinceLastTrade() {
+		Date now = new Date();
+		return (int) ((now.getTime() - lastTradeDate.getTime()) / (1000 * 60 * 60 * 24));
 	}
 	
 	// getters/setters

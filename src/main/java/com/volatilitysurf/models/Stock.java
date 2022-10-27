@@ -63,7 +63,11 @@ public class Stock {
 			Double moneyness = (Double) (option.getStrike() / this.regularMarketPrice);
 			Integer expiry = option.getDaysToExpiration();
 			String optionType = option.getOptionType(); 
-			if (optionType.charAt(0) == type && moneyness > 0.7 && moneyness < 1.4 && expiry > 4) {
+			Integer daysSinceLastTrade = option.getDaysSinceLastTrade(); 
+			if (optionType.charAt(0) == type 
+					&& moneyness > 0.7 && moneyness < 1.4 
+					&& expiry > 4
+					&& daysSinceLastTrade < 4 ) {
 				xdata = xdata +  moneyness.toString() + ",";
 				ydata = ydata + expiry.toString() + ",";
 				zdata = zdata + ((Double) (option.getImpliedVolatility() * 100)).toString() + ",";				
