@@ -71,12 +71,6 @@
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
-		<!-- DEPENDENCY FOR USING BCRYPT  -->
-		<dependency>
-		    <groupId>org.mindrot</groupId>
-		    <artifactId>jbcrypt</artifactId>
-		    <version>0.4</version>
-		</dependency>
 		<!-- DEPENDENCIES FOR BOOTSTRAP -->
 		<dependency>
 		    <groupId>org.webjars</groupId>

@@ -1,5 +1,6 @@
 package com.volatilitysurf.repositories;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
@@ -13,4 +14,5 @@ public interface OptionRepository extends CrudRepository<Option,Long> {
 	@SuppressWarnings("unchecked")
 	Option save(Option o);
 	List<Option> findByStock(Stock stock);
+	List<Option> findByStockAndExpiration(Stock stock, Date expiration);
 }

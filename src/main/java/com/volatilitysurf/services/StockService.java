@@ -3,6 +3,7 @@ package com.volatilitysurf.services;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Optional;
 
 import org.json.JSONObject;
@@ -40,6 +41,10 @@ public class StockService {
 	}
 	public void deleteStock(Stock stock) {
 		stockRepo.delete(stock);
+	}
+	public Date formatExpiration(Long idx) {
+		Timestamp expiration = new Timestamp(idx * 1000);
+		return new Date(expiration.getTime());
 	}
 		
 	public JSONObject fetchStockData(String symbol) 

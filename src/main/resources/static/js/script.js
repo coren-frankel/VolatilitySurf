@@ -1,42 +1,54 @@
-xdata = [2, 3, 4, 5, 3, 5];
-ydata = [2, 4, 8, 16, 7, 1];
-zdata = [1, 2, 1, 2, 2.5, 1.5];
 data = [{
     type: 'scatter3d',
-    x: xdata,
-    y: ydata,
-    z: zdata,
+    x: xdatacall,
+    y: ydatacall,
+    z: zdatacall,
     mode: 'markers',
     marker: { 
         color: 'green',
-        size: 3
-    }
+        size: 2
+    },
+    name: "Calls",
+    hovertemplate: "Exp: %{y} days<br>Mnns: %{x:.2f}<br>Vol: %{z:.1f}%<extra>Call</extra>"
+},
+{
+    type: 'scatter3d',
+    x: xdataput,
+    y: ydataput,
+    z: zdataput,
+    mode: 'markers',
+    marker: { 
+        color: 'orange',
+        size: 2
+    },
+    name: "Puts",
+    hovertemplate: "Exp: %{y} days<br>Mnns: %{x:.2f}<br>Vol: %{z:.1f}%<extra>Put</extra>"
 }];
 layout = { 
-    title: "Implied Volatility Plot",
-    width: 600,
+    title: "Implied Volatility",
+    width: 800,
 	height: 600,
     margin: {
-        l: 50,
-        r: 50,
-        b: 50,
-        t: 50,
+        l: 0,
+        r: 0,
+        b: 0,
+        t: 30,
     },
     scene:{
-        aspectratio: { x: 1, y: 1.2, z: 1 },
+        aspectratio: { x: 1, y: 1, z: 0.4 },
+        camera: { 
+			//projection: {type: "orthographic"},
+			eye: { x: -1.1, y: 1.1, z: 0.6 }
+			},
         xaxis: {
             title: "Moneyness",
-            nticks: 7,
-            range: [0, 6],
             backgroundcolor: 'rgb(235, 235, 235)',
             gridcolor: 'rgb(255, 255, 255)',
             zerolinecolor: "rgb(255, 255, 255)",
             showbackground: true
         },
         yaxis: {
-            title: "Expiry",
-            nticks: 5,
-            range: [0, 20],
+            title: "Expiry (calendar days)",
             backgroundcolor: 'rgb(235, 235, 235)',
             gridcolor: 'rgb(255, 255, 255)',
             zerolinecolor: "rgb(255, 255, 255)",
@@ -44,8 +56,6 @@ layout = {
         },
         zaxis: {
             title: "Volatility",
-            nticks: 7,
-            range: [0, 3],
             backgroundcolor: 'rgb(235, 235, 235)',
             gridcolor: 'rgb(255, 255, 255)',
             zerolinecolor: "rgb(255, 255, 255)",

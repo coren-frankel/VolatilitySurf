@@ -11,6 +11,15 @@
 <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css">
 <script src="/webjars/jquery/jquery.min.js"></script>
 <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="css/styles.css" type="text/css">
+
+
+<link href="https://unpkg.com/bootstrap-table@1.21.0/dist/bootstrap-table.min.css" rel="stylesheet">
+<link href="https://unpkg.com/bootstrap-table@1.21.0/dist/extensions/sticky-header/bootstrap-table-sticky-header.css" rel="stylesheet">
+<!-- BOOTSTRAP DEPENDENCIES FOR TABLE EFFECTS -->
+<script src="https://unpkg.com/bootstrap-table@1.21.0/dist/bootstrap-table.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.21.0/dist/extensions/sticky-header/bootstrap-table-sticky-header.min.js"></script>
+
 <title><c:out value="${ticker.getShortName()}"/> Stock Options</title>
 </head>
 <body class="m-4">
@@ -43,12 +52,24 @@
 	</c:choose><br>
 	<!-- Build out select drop down for options by expiry; Possible "straddle" toggle like yahoo finance? -->
 	<div class="d-flex lh-1 my-2">
-		<select class="">
-			<option value="">Sample Date</option>
-			<option value=""></option>
+	<!-- ON CHANGE, RENDER LIST BY EXPIRY -->
+		<form action="/setOptionsExpiry" method="POST">
+		<select name="expiryDate" class="form-select" onchange="this.form.submit()">
+			<c:forEach var="expiry" items="${expirations}">
+				<c:choose>
+					<c:when test="${selectedExpiry == expiry}">
+						<option value="${expiry}" selected><fmt:formatDate pattern="MMMM d, YYYY" timeZone="UTC" value="${expiry}"/></option>
+					</c:when>
+					<c:otherwise>
+						<option value="${expiry}"><fmt:formatDate pattern="MMMM d, YYYY" timeZone="UTC" value="${expiry}"/></option>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
 		</select>
+		</form>
 		<div class="d-inline p-2 rounded-1 ms-2" style="background-color:#CFE1FF;">In The Money</div>
 	</div>
+		<div class="table-wrapper-scroll-y my-custom-scrollbar">
 	<table class="table table-striped table-secondary text-end" style="font-size:60%;">
 		<thead>
 			<tr style="font-size:85%;">
@@ -66,13 +87,14 @@
 			</tr>
 		</thead>
 		<tbody>
-		<c:forEach var="option" items="${ticker.getOptions()}">
+		<c:forEach var="option" items="${options}">
+			<!-- WHEN IN THE MONEY, RENDER BLUE HIGHLIGHT -->
 		<c:choose>
 			<c:when test="${option.getInTheMoney()}">
 				<tr class="table-primary lh-1">
 			</c:when>
 			<c:otherwise>
-				<tr class=" lh-1">
+				<tr class="lh-1">
 			</c:otherwise>
 		</c:choose>
 					<td class="text-start">
@@ -104,6 +126,7 @@
 			</c:forEach>
 		</tbody>
 	</table>
+			</div>
 	</fmt:timeZone>
 </body>
 </html>

@@ -36,6 +36,10 @@ public class OptionService {
 	public List<Option> getOptionsByStock(Stock stock){
 		return optionRepo.findByStock(stock);
 	}
+	//FILTER OPTIONS BY EXPIRATION OF CONTRACTS
+	public List<Option> getOptionsByExpiration(Stock stock, Date expiration){
+		return optionRepo.findByStockAndExpiration(stock, expiration);
+	}
 	
 	public JSONObject fetchOptionData(Stock stock, String expiry)
 			throws UnsupportedEncodingException	{
