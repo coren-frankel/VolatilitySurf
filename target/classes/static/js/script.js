@@ -8,7 +8,8 @@ data = [{
         color: 'green',
         size: 2
     },
-    name: "Calls"
+    name: "Calls",
+    hovertemplate: "Exp: %{y} days<br>Mns: %{x:.2f}<br>Vol: %{z:.1f}%<extra>Call</extra>"
 },
 {
     type: 'scatter3d',
@@ -20,21 +21,25 @@ data = [{
         color: 'orange',
         size: 2
     },
-    name: "Puts"
+    name: "Puts",
+    hovertemplate: "Exp: %{y} days<br>Mns: %{x:.2f}<br>Vol: %{z:.1f}%<extra>Put</extra>"
 }];
 layout = { 
-    title: "Implied Volatility Plot",
-    width: 600,
+    title: "Implied Volatility",
+    width: 800,
 	height: 600,
     margin: {
-        l: 50,
-        r: 50,
-        b: 50,
-        t: 50,
+        l: 0,
+        r: 0,
+        b: 0,
+        t: 30,
     },
     scene:{
-        aspectratio: { x: 1, y: 1.2, z: 1 },
-        // camera: { projection: {type: "orthographic"}},
+        aspectratio: { x: 1, y: 1, z: 0.4 },
+        camera: { 
+			//projection: {type: "orthographic"},
+			eye: { x: 0.2, y: 1.5, z: 0.7 }
+			},
         xaxis: {
             title: "Moneyness",
             backgroundcolor: 'rgb(235, 235, 235)',
@@ -43,7 +48,7 @@ layout = {
             showbackground: true
         },
         yaxis: {
-            title: "Expiry",
+            title: "Expiry (calendar days)",
             backgroundcolor: 'rgb(235, 235, 235)',
             gridcolor: 'rgb(255, 255, 255)',
             zerolinecolor: "rgb(255, 255, 255)",
