@@ -40,7 +40,7 @@ public class MainController {
 			@RequestParam("symbol") String symbol,
 			HttpSession session) 
 			throws UnsupportedEncodingException {
-		if(symbol.trim().length() > 4 || symbol.trim().length() < 2) {
+		if(symbol.trim().length() > 4 || symbol.trim().length() < 1) {
 			return "redirect:/";
 		}//THESE VALIDATIONS SHOULD BE BEEFED UP
 		//TODO: 

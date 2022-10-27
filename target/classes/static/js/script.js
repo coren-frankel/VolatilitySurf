@@ -9,7 +9,7 @@ data = [{
         size: 2
     },
     name: "Calls",
-    hovertemplate: "Exp: %{y} days<br>Mns: %{x:.2f}<br>Vol: %{z:.1f}%<extra>Call</extra>"
+    hovertemplate: "Exp: %{y} days<br>Mnns: %{x:.2f}<br>Vol: %{z:.1f}%<extra>Call</extra>"
 },
 {
     type: 'scatter3d',
@@ -22,7 +22,7 @@ data = [{
         size: 2
     },
     name: "Puts",
-    hovertemplate: "Exp: %{y} days<br>Mns: %{x:.2f}<br>Vol: %{z:.1f}%<extra>Put</extra>"
+    hovertemplate: "Exp: %{y} days<br>Mnns: %{x:.2f}<br>Vol: %{z:.1f}%<extra>Put</extra>"
 }];
 layout = { 
     title: "Implied Volatility",
