@@ -38,7 +38,7 @@ layout = {
         aspectratio: { x: 1, y: 1, z: 0.4 },
         camera: { 
 			//projection: {type: "orthographic"},
-			eye: { x: -1, y: 1.5, z: 0.5 }
+			eye: { x: -1.1, y: 1.1, z: 0.6 }
 			},
         xaxis: {
             title: "Moneyness",
