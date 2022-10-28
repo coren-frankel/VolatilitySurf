@@ -22,23 +22,7 @@
 
 
  
-<script>
-$(document)
-	.ready(function () {
-  	$('#opTable')
-  		.DataTable({
-  			ordering: true,
-	        paging: false,
-	        searching: false,
-	        info: false,
-	        stickyHeader: true,
-	        processing: true,
-	        scrollY: 300,
-	        responsive: true,
-	        scrollCollapse: true,
-	        order: [2,'asc']
-      });
-});
+<script type="text/javascript" src="js/datatable.js">
 </script>
 <title><c:out value="${ticker.getShortName()}"/> Stock Options</title>
 </head>
@@ -89,11 +73,14 @@ $(document)
 		</form>
 		<div class="d-inline p-2 rounded-1 ms-2" style="background-color:#CFE1FF;">In The Money</div>
 	</div>
-		<div class="d-flex justify-start align-items-center">
+	
+	<!-- CALLS TABLE -->
+	<div class="d-flex justify-start align-items-center">
 		<strong class="me-2">Calls</strong>for 
 		<fmt:formatDate pattern="MMMM d, YYYY" timeZone="UTC"  value="${selectedExpiry}"/>
-		</div>
-	<table class="table table-secondary table-hover text-center" style="font-size:60%;" id="opTable">
+		<strong class="ms-5">List |</strong> <a href="#" class="ms-1">Straddle</a>
+	</div>
+	<table class="table table-secondary table-hover text-center" style="font-size:60%;" id="callTable">
 		<thead>
 			<tr style="font-size:85%;">
 				<th class="text-start">Contract Name</th>
@@ -110,7 +97,69 @@ $(document)
 			</tr>
 		</thead>
 		<tbody>
-		<c:forEach var="option" items="${options}">
+		<c:forEach var="option" items="${calls}">
+			<!-- WHEN IN THE MONEY, RENDER BLUE HIGHLIGHT -->
+		<c:choose>
+			<c:when test="${option.getInTheMoney()}">
+				<tr class="table-primary lh-1">
+			</c:when>
+			<c:otherwise>
+				<tr class="lh-1">
+			</c:otherwise>
+		</c:choose>
+					<td class="text-start">
+						<c:out value="${option.getContractSymbol()}"/>
+					</td>
+					<td><fmt:formatDate pattern="yyyy-MM-dd h:mma z"  value="${option.getLastTradeDate()}"/></td>
+					<td><fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${option.getStrike()}"/></td>
+					<td><fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${option.getLastPrice()}"/></td>
+					<td><fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${option.getBid()}"/></td>
+					<td><fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${option.getAsk()}"/></td>
+					<c:choose>
+						<c:when test="${option.getAbsoluteChange() > 0}">
+							<td class="text-success">+<fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${option.getAbsoluteChange()}"/></td>
+							<td class="text-success">+<fmt:formatNumber type="PERCENT" maxFractionDigits="2" minFractionDigits="2" value="${option.getPercentChange()/100}"/></td>
+						</c:when>
+						<c:when test="${option.getAbsoluteChange() < 0}">
+							<td class="text-danger"><fmt:formatNumber type="NUMBER" maxFractionDigits="2" minFractionDigits="2" value="${option.getAbsoluteChange()}"/></td>
+							<td class="text-danger"><fmt:formatNumber type="PERCENT" maxFractionDigits="2" minFractionDigits="2" value="${option.getPercentChange()/100}"/></td>
+						</c:when>
+						<c:otherwise>
+							<td>0.00</td>
+							<td> - </td>
+						</c:otherwise>
+					</c:choose>
+					<td><c:out value="${option.getVolume()}"/></td>
+					<td><c:out value="${option.getOpenInterest()}"/></td>
+					<td><fmt:formatNumber type="PERCENT" maxFractionDigits="2" minFractionDigits="2" value="${option.getImpliedVolatility()}"/></td>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
+	
+	<!-- PUTS TABLE -->
+	<div class="d-flex justify-start align-items-center mt-1">
+		<strong class="me-2">Puts</strong>for 
+		<fmt:formatDate pattern="MMMM d, YYYY" timeZone="UTC"  value="${selectedExpiry}"/>
+	</div>
+	<table class="table table-secondary table-hover text-center" style="font-size:60%;" id="putTable">
+		<thead>
+			<tr style="font-size:85%;">
+				<th class="text-start">Contract Name</th>
+				<th class="text-end">Last Trade Date</th>
+				<th class="text-end">Strike</th>
+				<th class="text-end">Last Price</th>
+				<th class="text-end">Bid</th>
+				<th class="text-end">Ask</th>
+				<th class="text-end">Change</th>
+				<th class="text-end">% Change</th>
+				<th class="text-end">Volume</th>
+				<th class="text-end">Open Interest</th>
+				<th class="text-end">Implied Volatility</th>
+			</tr>
+		</thead>
+		<tbody>
+		<c:forEach var="option" items="${puts}">
 			<!-- WHEN IN THE MONEY, RENDER BLUE HIGHLIGHT -->
 		<c:choose>
 			<c:when test="${option.getInTheMoney()}">

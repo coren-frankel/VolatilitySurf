@@ -100,10 +100,10 @@ public class MainController {
 			expiry = expiries.get(0);
 		}//START WITH THE FIRST FROM THE LIST
 		Stock ticker = stockServ.getStockBySymbol(symbol);
-		List<Option> options = optionServ.getOptionsByExpiration(ticker, expiry); 
 		model.addAttribute("ticker", ticker);
 		model.addAttribute("expirations", expiries);
-		model.addAttribute("options", options);
+		model.addAttribute("calls", optionServ.getOptionsByExpiration(ticker, expiry, "C"));
+		model.addAttribute("puts", optionServ.getOptionsByExpiration(ticker, expiry, "P"));
 		model.addAttribute("selectedExpiry", expiry);
 		return "options.jsp";
 	}

@@ -36,9 +36,9 @@ public class OptionService {
 	public List<Option> getOptionsByStock(Stock stock){
 		return optionRepo.findByStock(stock);
 	}
-	//FILTER OPTIONS BY EXPIRATION OF CONTRACTS
-	public List<Option> getOptionsByExpiration(Stock stock, Date expiration){
-		return optionRepo.findByStockAndExpiration(stock, expiration);
+	//FILTER OPTIONS BY EXPIRATION OF CONTRACTS AND CALL OR PUT
+	public List<Option> getOptionsByExpiration(Stock stock, Date expiration, String o){
+		return optionRepo.findByStockAndExpirationAndOptionType(stock, expiration, o);
 	}
 	
 	public JSONObject fetchOptionData(Stock stock, String expiry)

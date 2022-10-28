@@ -14,5 +14,5 @@ public interface OptionRepository extends CrudRepository<Option,Long> {
 	@SuppressWarnings("unchecked")
 	Option save(Option o);
 	List<Option> findByStock(Stock stock);
-	List<Option> findByStockAndExpiration(Stock stock, Date expiration);
+	List<Option> findByStockAndExpirationAndOptionType(Stock stock, Date expiration, String o);
 }
