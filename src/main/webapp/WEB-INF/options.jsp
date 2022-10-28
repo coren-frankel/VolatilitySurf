@@ -8,18 +8,38 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- BOOTSTRAP & JQUERY-->
 <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css">
-<script src="/webjars/jquery/jquery.min.js"></script>
 <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+<script src="/webjars/jquery/jquery.min.js"></script>
+
 <link rel="stylesheet" href="css/styles.css" type="text/css">
 
+<!-- DATA TABLES -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.12.1/fh-3.2.4/r-2.3.0/sc-2.0.7/datatables.min.css"/>
+ 
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.12.1/fh-3.2.4/r-2.3.0/sc-2.0.7/datatables.min.js"></script>
 
-<link href="https://unpkg.com/bootstrap-table@1.21.0/dist/bootstrap-table.min.css" rel="stylesheet">
-<link href="https://unpkg.com/bootstrap-table@1.21.0/dist/extensions/sticky-header/bootstrap-table-sticky-header.css" rel="stylesheet">
-<!-- BOOTSTRAP DEPENDENCIES FOR TABLE EFFECTS -->
-<script src="https://unpkg.com/bootstrap-table@1.21.0/dist/bootstrap-table.min.js"></script>
-<script src="https://unpkg.com/bootstrap-table@1.21.0/dist/extensions/sticky-header/bootstrap-table-sticky-header.min.js"></script>
 
+ 
+<script>
+$(document)
+	.ready(function () {
+  	$('#opTable')
+  		.DataTable({
+  			ordering: true,
+	        paging: false,
+	        searching: false,
+	        info: false,
+	        stickyHeader: true,
+	        processing: true,
+	        scrollY: 300,
+	        responsive: true,
+	        scrollCollapse: true,
+	        order: [2,'asc']
+      });
+});
+</script>
 <title><c:out value="${ticker.getShortName()}"/> Stock Options</title>
 </head>
 <body class="m-4">
@@ -69,21 +89,24 @@
 		</form>
 		<div class="d-inline p-2 rounded-1 ms-2" style="background-color:#CFE1FF;">In The Money</div>
 	</div>
-		<div class="table-wrapper-scroll-y my-custom-scrollbar">
-	<table class="table table-striped table-secondary text-end" style="font-size:60%;">
+		<div class="d-flex justify-start align-items-center">
+		<strong class="me-2">Calls</strong>for 
+		<fmt:formatDate pattern="MMMM d, YYYY" timeZone="UTC"  value="${selectedExpiry}"/>
+		</div>
+	<table class="table table-secondary table-hover text-center" style="font-size:60%;" id="opTable">
 		<thead>
 			<tr style="font-size:85%;">
 				<th class="text-start">Contract Name</th>
-				<th>Last Trade Date</th>
-				<th>Strike</th>
-				<th>Last Price</th>
-				<th>Bid</th>
-				<th>Ask</th>
-				<th>Change</th>
-				<th>% Change</th>
-				<th>Volume</th>
-				<th>Open Interest</th>
-				<th>Implied Volatility</th>
+				<th class="text-end">Last Trade Date</th>
+				<th class="text-end">Strike</th>
+				<th class="text-end">Last Price</th>
+				<th class="text-end">Bid</th>
+				<th class="text-end">Ask</th>
+				<th class="text-end">Change</th>
+				<th class="text-end">% Change</th>
+				<th class="text-end">Volume</th>
+				<th class="text-end">Open Interest</th>
+				<th class="text-end">Implied Volatility</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -126,7 +149,7 @@
 			</c:forEach>
 		</tbody>
 	</table>
-			</div>
+
 	</fmt:timeZone>
 </body>
 </html>
