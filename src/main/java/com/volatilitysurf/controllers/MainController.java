@@ -3,7 +3,8 @@ package com.volatilitysurf.controllers;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,8 +16,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.volatilitysurf.models.Option;
 import com.volatilitysurf.models.Stock;
 import com.volatilitysurf.services.OptionService;
 import com.volatilitysurf.services.StockService;
@@ -38,25 +39,37 @@ public class MainController {
 	@PostMapping("/fetch")
 	public String fetch(
 			@RequestParam("symbol") String symbol,
-			HttpSession session) 
+			HttpSession session, RedirectAttributes ra) 
 			throws UnsupportedEncodingException {
-		if(symbol.trim().length() > 4 || symbol.trim().length() < 1) {
-			return "redirect:/";
-		}//THESE VALIDATIONS SHOULD BE BEEFED UP
-		//TODO: 
-		//	-BEEF IT UP
-		//	-INCORPORATE FLASH MESSAGES?
-		JSONObject result = stockServ.fetchStockData(symbol);
-		
-		if(result == null) {
+		//REGEX FOR STOCK TICKERS CASE INSENSITIVE
+		Pattern tickerPattern = Pattern.compile("^[a-zA-Z]{1,4}$");
+		Matcher matcher = tickerPattern.matcher(symbol);
+		boolean matched = matcher.find();
+		String errorMsg;
+		if(!matched) {//ERROR - DIDN'T SATISFY REGEX
+			errorMsg = String.format("\"%s\" is not a valid ticker symbol.", symbol);
+			ra.addFlashAttribute("errors", errorMsg);
 			return "redirect:/";
 		}
+		JSONObject result = stockServ.fetchStockData(symbol);
+		if(result == null) {//
+			errorMsg = String.format("Nothing comes up for \"%s\".", symbol.toUpperCase());
+			ra.addFlashAttribute("errors", errorMsg);
+			return "redirect:/";
+		}
+		
+		JSONArray expirationDates = result.getJSONArray("expirationDates");
+		if(expirationDates.length() < 1) {//1 OPTION MINIMUM ARBITRARY?
+			errorMsg = String.format("Unable to find options data for \"%s\".", symbol.toUpperCase());
+			ra.addFlashAttribute("errors", errorMsg);
+			return "redirect:/";
+		}
+		
 		Stock existingStock = stockServ.getStockBySymbol(symbol);
 		if(existingStock != null) {
 			stockServ.deleteStock(existingStock);			
 		}
 		
-		JSONArray expirationDates = result.getJSONArray("expirationDates");
 		JSONObject quote = result.getJSONObject("quote");
 		JSONObject options = result.getJSONArray("options").getJSONObject(0);
 		
@@ -70,17 +83,17 @@ public class MainController {
 			if(i == 1) {//BEFORE ADDING TO EXPIRATION LIST
 				Date exp = stockServ.formatExpiration(expirationDates.getLong(0));
 				expiries.add(exp);
-			}//FORMAT & ADD FIRST DATE, SKIPPED FOR 2ND API REQUEST
+			}//FORMAT & ADD FIRST DATE
 			expiries.add(stockServ.formatExpiration(expirationDates.getLong(i)));
 			//THEN FORMAT AND ADD EACH EXPIRY IN NATURAL ORDER
 			Long expiry = expirationDates.getLong(i);
 			options = optionServ.fetchOptionData(ticker, expiry.toString());	
 			optionServ.saveOptions(ticker, options);
 		}
-		
 		ticker.setOptions(optionServ.getOptionsByStock(ticker));
+		//UPON SUCCESSFUL SAVE, ADD SYMBOL TO SESSION
 		session.setAttribute("symbol",symbol);
-		
+		//SAVE EXPIRATIONS INTO SESSION FOR 
 		session.setAttribute("expiries", expiries);
 		return "redirect:/options";
 	}
