@@ -30,8 +30,8 @@
 	<div class="d-flex justify-content-between align-items-center">
 		<h3><c:out value="${ticker.getShortName()}"/> (<c:out value="${ticker.getSymbol()}"/>)</h3>
 		<div class="d-flex justify-content-between">
-			<a href="/volsurf" class="btn btn-sm btn-outline-dark me-3">Volatility Surface</a>
-			<a href="/" class="btn btn-sm btn-outline-dark">Home</a>
+			<a href="/volsurf" class="btn btn-lg btn-outline-dark me-3">Volatility Surface</a>
+			<a href="/" class="btn btn-lg btn-outline-dark">Home</a>
 		</div>
 	</div>
 	<small class="text-secondary"><c:out value="${ticker.getFullExchangeName()}"/> - <c:out value="${ticker.getFullExchangeName()}"/> Real Time Price. Currently in <c:out value="${ticker.getCurrency()}"/></small>
