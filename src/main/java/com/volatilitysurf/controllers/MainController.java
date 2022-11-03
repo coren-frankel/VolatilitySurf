@@ -52,14 +52,14 @@ public class MainController {
 			return "redirect:/";
 		}
 		JSONObject result = stockServ.fetchStockData(symbol);
-		if(result == null) {//
+		if(result == null) {//ERROR - MBOUM EMPTY RESULTS OR ERROR
 			errorMsg = String.format("Nothing comes up for \"%s\".", symbol.toUpperCase());
 			ra.addFlashAttribute("errors", errorMsg);
 			return "redirect:/";
 		}
 		
 		JSONArray expirationDates = result.getJSONArray("expirationDates");
-		if(expirationDates.length() < 1) {//1 OPTION MINIMUM ARBITRARY?
+		if(expirationDates.length() < 1) {//ERROR - 1 OPTION MINIMUM ARBITRARY?
 			errorMsg = String.format("Unable to find options data for \"%s\".", symbol.toUpperCase());
 			ra.addFlashAttribute("errors", errorMsg);
 			return "redirect:/";
