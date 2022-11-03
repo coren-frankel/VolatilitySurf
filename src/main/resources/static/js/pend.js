@@ -2,7 +2,8 @@ const loadingBar = document.getElementById('loadingBar');
 function search(){
 	//DISABLE SEARCH BUTTON AFTER SUBMISSION
 	document.getElementById("search").disabled = true
-	//MUCH OF THIS IS BORROWED & PATCHED FROM TUTORIALS
+	document.getElementById("error-bar").innerHTML = "";
+	//MUCH OF THIS IS AMALGAMATED FROM TUTORIALS
 	async function task() {//SIMULATED PROMISES
 		return new Promise(res => {
 	   		setTimeout(res, Math.random() * 30000);
