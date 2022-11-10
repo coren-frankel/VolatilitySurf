@@ -13,9 +13,9 @@ function search(){
 		loadingBar.innerHTML = `
 	  		<div class="progress m-auto ml9" style="width: 50%;">
 				<div class="progress-bar progress-bar-striped 
-				progress-bar-animated bg-info" role="progressbar" 
+				progress-bar-animated bg-primary" role="progressbar" 
 				style="width: ${current}%">
-					${current < 45 ? "Fetching Real-Time Stock Option Data..." : "The Data-Tide Is Coming In..."}
+					${current < 45 ? "Fetching Real-Time Stock Option Data..." : "The Data \"Tide\" Is Coming In..."}
 				</div>
 			</div>`;
     				
@@ -32,7 +32,7 @@ function search(){
 				<div class="progress-bar progress-bar-striped
 				progress-bar-animated bg-primary" role="progressbar" 
 				style="width: 99%;">
-				We're almost done pooling the data! This one should make a splash... 🌊
+				Almost Done... This One Should Make A Splash! 🌊
 				</div>
 			</div>`;
 	})();		

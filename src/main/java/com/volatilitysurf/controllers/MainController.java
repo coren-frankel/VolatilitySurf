@@ -26,13 +26,12 @@ import com.volatilitysurf.services.StockService;
 public class MainController {
 	@Autowired
 	private StockService stockServ;
-	
 	@Autowired
 	private OptionService optionServ;
 	
 	@GetMapping("/")
 	public String home(HttpSession session) {
-		session.invalidate();//Clear session, if it was used, no problem?
+		session.invalidate();//CLEAR SESSION BEFORE NEW SEARCH
 		return "index.jsp";
 	}
 	
