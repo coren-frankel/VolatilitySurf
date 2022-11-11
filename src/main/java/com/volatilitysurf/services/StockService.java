@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Optional;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,7 +64,12 @@ public class StockService {
 				.header("X-RapidAPI-Key", x_rapidapi_key)
 				.header("X-RapidAPI-Host", x_rapidapi_host)
 				.asJson();
-				return response.getBody().getObject().getJSONObject("optionChain").getJSONArray("result").getJSONObject(0);
+				JSONArray result = response.getBody().getObject().getJSONObject("optionChain").getJSONArray("result");
+				if(result.length() == 0) {//MBOUM RETURNS EMPTY "RESULT" ARRAY RATHER THAN ERROR MSG
+					return null;//TESTING EXAMPLES LIKE "DORK" OR "OOZE" DON'T TRIGGER ERRORS
+				}//NULL WILL TRIGGER FLASH MSG
+				//ELSE SEND THE STOCK
+				return result.getJSONObject(0);
 		} 
 		catch (UnirestException e) {
 			System.out.printf("get: %s", e.getMessage());
