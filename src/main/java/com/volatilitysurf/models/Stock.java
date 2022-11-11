@@ -69,7 +69,7 @@ public class Stock {
 					&& moneyness > 0.7 && moneyness < 1.4 
 					&& expiry > 4
 					&& daysSinceLastTrade < 3
-//					&& volatility > 1
+					&& volatility > 1
 				) {
 				xdata = xdata +  moneyness.toString() + ",";
 				ydata = ydata + expiry.toString() + ",";
