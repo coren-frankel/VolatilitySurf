@@ -12,15 +12,11 @@
 <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css">
 <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 <script src="/webjars/jquery/jquery.min.js"></script>
-
 <link rel="stylesheet" href="css/styles.css" type="text/css">
 
 <!-- DATA TABLES -->
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.12.1/fh-3.2.4/r-2.3.0/sc-2.0.7/datatables.min.css"/>
- 
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.12.1/fh-3.2.4/r-2.3.0/sc-2.0.7/datatables.min.js"></script>
-
-
  
 <script type="text/javascript" src="js/datatable.js">
 </script>

@@ -52,7 +52,7 @@ public class MainController {
 		}
 		JSONObject result = stockServ.fetchStockData(symbol);
 		if(result == null) {//ERROR - MBOUM EMPTY RESULTS OR ERROR
-			errorMsg = String.format("Nothing comes up for \"%s\".", symbol.toUpperCase());
+			errorMsg = String.format("Nothing comes up for \"%s\".", symbol);
 			ra.addFlashAttribute("errors", errorMsg);
 			return "redirect:/";
 		}
