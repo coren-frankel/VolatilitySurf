@@ -3,14 +3,16 @@
 <!-- > Live demo [_here_](https://www.example.com). --> <!-- Once a live deployment is available, include the link here. -->
 
 ## Table of Contents
-* [General Info](#general-information)
-* [Technologies Used](#technologies-used)
-* [Features](#features)
-* [Screenshots](#screenshots)
-* [Project Status](#project-status)
-* [Room for Improvement](#room-for-improvement)
-* [Acknowledgements](#acknowledgements)
-* [Contact](#contact)
+- [*VolatilitySurf*](#volatilitysurf)
+  - [Table of Contents](#table-of-contents)
+  - [General Information](#general-information)
+  - [Technologies Used](#technologies-used)
+  - [Features](#features)
+  - [Screenshots](#screenshots)
+  - [Project Status](#project-status)
+  - [Room for Improvement](#room-for-improvement)
+  - [Acknowledgements](#acknowledgements)
+  - [Contact](#contact)
 <!-- * [License](#license) -->
 
 <!-- PLACE BETWEEN SCREENSHOTS AND PROJECT STATUS WHEN IMPLEMENTING
@@ -25,7 +27,7 @@
 - What is the purpose of your project?
 - Why did you undertake it?
 -->
-As fellow students in full stack development, collaborators Erik van Erp, David Moore, and Coren Frankel sought to build a first draft for open source volatility surface rendering--financial data visualizations that the exclusive Bloomberg Terminal service dominates. *VolatilitySurf* is a Java web app project that has evolved to encapsulate the volatility surface rendering namesake with a minimalist ticker search function and real-time stock market options data presented in conventional format and with simple but sleek User Interface.
+As fellow students in full stack development at Coding Dojo, collaborators Erik van Erp, David Moore, and Coren Frankel sought to build a first draft for open source volatility surface rendering--financial data visualizations that the exclusive Bloomberg Terminal service dominates. *VolatilitySurf* is a Java web app project that has evolved to encapsulate the volatility surface namesake with a minimalist ticker search function and real-time stock market options data presented in conventional format and with simple but sleek User Interface.
 <!-- You don't have to answer all the questions - just the ones relevant to your project. -->
 
 
@@ -35,21 +37,34 @@ As fellow students in full stack development, collaborators Erik van Erp, David 
 - JavaScript libraries: 
    + Plotly.js 
    + D3.js
+   + jQuery
 - Bootstrap
-- MBoum API
+- [DataTables](https://datatables.net/)
+- [Mboum Finance API](https://mboum.com/api/documentation#options)
 - MySQL - version 8.0.28
 
 
 ## Features
 <!-- List the ready features here: -->
-- Minimalist Ticker home page with form search
-- Real-time stock options data conditionally rendered in table format akin to Yahoo! Finance
+- Minimalist home page with form search for stock tickers
+- Real-time stock options data retrieved by user request
+- Loading animation with pseudo-asynchronous progress reporting
+- Error Handling & Validations with flash error messages 
+- Upon valid request, hundreds of rows of stock option contracts are retrieved
+- Successful search redirects to conventional stock options display (see [Yahoo!+Finance](https://finance.yahoo.com/quote/JNJ/options?p=JNJ))
+- Options contracts are filtered by expiration and defaults to next impending expiry
+- Tables are delineated and sorted into Calls and Puts
+- DataTables provide table data sorting and other interactivity
 - More on the way! (Rendered implied volatility surfaces coming soon)
 
 
 ## Screenshots
 <!-- If you have screenshots, gifs, video demos you'd like to share, include them here. -->
-![Landing Page Screenshot](./img/landing.gif)
+![MiniDemo Version 0.3 gif](./img/v0.3Demo.gif)
+>Version 0.3 displays sorted tables by dropdown expiration date and first authentic data visualizations of options contracts in scatterplot form.
+
+![MiniDemo Version 0.4 gif](./img/v0.4Demo.gif)
+>Version 0.4 demonstrates loading progress bar animation and new default table views split by Call and Put options contracts.
 
 <!--
 ## Setup
@@ -78,15 +93,21 @@ Active Contributors:
 <!-- Include areas you believe need improvement / could be improved. Also add TODOs for future development. -->
 
 Room for improvement:
-- The lag after search initiation is due to the great size of the data being collected and will soon be augmented (i.e. loading animation, asynchronous loading). Currently we are calling and collecting many 1000s of data entries and immediately loading them all. Thus in version 0.1 our drop down list meant to separate the options by date is unfinished, and the table stretches the page to an unreadable length.
-- Rather than using the implied volatility value given from MBoum API, Erik intends to calculate our own implied volatility for improved accuracy in the data visualizations.
+- The time it takes to successfully retrieve stock options varies from a couple of seconds to around 15-20 seconds depending on the amount of options contracts available for a stock.
+- Provide more seamless access between recently searched tickers
+- Rather than using the implied volatility value given from Mboum API, we intend to calculate our own implied volatility for improved accuracy in the data visualizations.
 
 To do:
-- Provide data filtering by options expiration date manipulated by drop down
-- Compile coordinates for d3/plotly to render as a real volatility surface
-- Integrate loading animations where necessary
-- Break up option data creation to increase loading speed
+- Determine the missing factors to normalize implied volatility between Call & Put for one surface
+- Isolate ideal filters for outlier data and implement interpolating algorithm for smooth surfaces
+- Compile coordinates for d3/plotly to render as a real volatility surface plots
+- Refactor search mechanism for speed
+- Mimic Yahoo Finance "straddle" table view
 
+Completed:
++ The lag after search initiation is due to the great size of the data being collected and will soon be augmented (i.e. loading animation, asynchronous loading). Currently we are calling and collecting many 100 or 1000 rows of data and immediately retrieving them for display. Thus in version 0.1 our drop down list meant to separate the options by date is unfinished, and the table stretches the page to an unreadable length. (v0.2 - 0.4)
++ Provide data filtering by options expiration date manipulated by drop down (v0.2)
++ Integrate loading animations where necessary (v0.2)
 
 ## Acknowledgements
 <!-- I think you could do this section more justice Erik. Here's a "template/rough draft"-->

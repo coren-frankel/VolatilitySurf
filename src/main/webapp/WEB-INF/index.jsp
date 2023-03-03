@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,21 +17,25 @@
 	<div class="container">
 		<div class="row my-5">
 			<div class="col col-5 mx-auto">
-
 				<h1 class="text-center">VolatilitySurf</h1>
-					<div class="d-flex justify-content-center">
-				<form action="/fetch" method="POST" id="form">
+				<div class="d-flex justify-content-center">
+					<form action="/fetch" method="POST" id="form">
 						<div class="input-group">
 							<input type="text" name="symbol" placeholder="Ticker Search" class="form-control"/>
 							<button type="submit" id="search" class="btn btn-primary"><i class="fa fa-search"></i></button>
 						</div>
-				</form>
-					</div>
-					
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>
-	<div id="loadingBar">
+	<div id="loadingBar"></div>
+	<div id="error-bar">
+	<c:if test="${errors.length() > 0}">
+	<aside class="alert alert-danger text-center">
+		<strong class="text-nowrap margin-auto">${errors} Try something else.</strong>
+	</aside>
+	</c:if>
 	</div>
 </body>
 </html>
